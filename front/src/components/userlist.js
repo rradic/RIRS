@@ -1,31 +1,34 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { fetchUsers } from '../services/api';
 
-function UserList() {
-    const [users, setUsers] = useState([]);
+const UserList = () => {
+  const [users, setUsers] = useState([]);
+  const [error, setError] = useState(null);
 
-    useEffect(() => {
-        const loadUsers = async () => {
-            try {
-                const usersData = await fetchUsers();
-                setUsers(usersData);
-            } catch (error) {
-                console.error("Failed to load users:", error);
-            }
-        };
-        loadUsers();
-    }, []);
+  useEffect(() => {
+    const loadUsers = async () => {
+      try {
+        const data = await fetchUsers();
+        setUsers(data);
+      } catch (error) {
+        setError('Failed to load users.');
+      }
+    };
 
-    return (
-        <div>
-            <h2>User List</h2>
-            <ul>
-                {users.map(user => (
-                    <li key={user._id}>{user.name} - {user.role}</li>
-                ))}
-            </ul>
-        </div>
-    );
-}
+    loadUsers();
+  }, []);
+
+  return (
+    <div>
+      <h2>User List</h2>
+      {error && <p>{error}</p>}
+      <ul>
+        {users.map((user) => (
+          <li key={user._id}>{user.name}</li>
+        ))}
+      </ul>
+    </div>
+  );
+};
 
 export default UserList;

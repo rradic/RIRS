@@ -6,7 +6,6 @@ const expenseSchema = new mongoose.Schema({
     amount: { type: Number, required: true },
     date: { type: Date, required: true },
     status: { type: String, enum: ['pending', 'approved', 'rejected'], default: 'pending' },
-    type: { type: String, enum: ['meal', 'travel', 'accommodation', 'other'], required: true }, 
     group: { type: mongoose.Schema.Types.ObjectId, ref: 'Group' } 
 }, { timestamps: true });
 
