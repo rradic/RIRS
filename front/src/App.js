@@ -1,13 +1,11 @@
 import React from 'react';
-import UserList from './components/userlist';
-import AddUser from './components/addUser';
+
+import AdminDashboard from './pages/adminDashboard';
 
 function App() {
   return (
     <div>
-      <h1>Manage Users</h1>
-      <AddUser />
-      <UserList />
+      <AdminDashboard></AdminDashboard>
     </div>
   );
 }

@@ -2,6 +2,9 @@ const express = require('express');
 const User = require('../schemas/user'); // Adjust path if necessary
 
 const router = express.Router();
+const crypto = require('crypto');
+
+const bcrypt = require('bcryptjs');
 
 // Get all users
 router.get('/', async (req, res) => {
@@ -26,10 +29,31 @@ router.get('/:id', async (req, res) => {
 
 // Create a new user
 router.post('/', async (req, res) => {
-  const user = new User(req.body);
+  const { name, role } = req.body;
+
+  // Generate email based on name
+  const email = `${name.replace(/\s+/g, '').toLowerCase()}@company.com`;
+
+  // Generate a random password
+  const plainPassword = Math.random().toString(36).slice(-8);
+
+  // Hash the password with bcrypt
+  const saltRounds = 10;
   try {
+    const hashedPassword = await bcrypt.hash(plainPassword, saltRounds);
+
+    const user = new User({
+      name,
+      email,
+      password: hashedPassword,
+      role,
+    });
+
     const newUser = await user.save();
-    res.status(201).json(newUser);
+    res.status(201).json({
+      user: newUser,
+      plainPassword, // This can be removed in production; shared for testing purposes
+    });
   } catch (err) {
     res.status(400).json({ message: err.message });
   }

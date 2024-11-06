@@ -1,50 +1,68 @@
 import React, { useState } from 'react';
-import { createUser } from '../services/api';
+import { addUser } from '../services/api';
+import {
+  TextField,
+  Button,
+  Box,
+  Typography,
+  MenuItem,
+  Select,
+  InputLabel,
+  FormControl,
+} from '@mui/material';
 
-const AddUser = () => {
+const AddUser = ({ onUserAdded }) => {
   const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [status, setStatus] = useState(null);
+  const [role, setRole] = useState('employee');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const newUser = { name, email };
+    const user = { name, role };
     try {
-      await createUser(newUser);
-      setStatus('User added successfully!');
-      setName('');
-      setEmail('');
+      await addUser(user);
+      alert('User added successfully!');
+      setName(name);
+      setRole(role);
+      onUserAdded();
     } catch (error) {
-      setStatus('Error adding user.');
+      alert('Error adding user');
     }
   };
 
   return (
-    <div>
-      <h2>Add User</h2>
-      {status && <p>{status}</p>}
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Name:</label>
-          <input
-            type='text'
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label>Email:</label>
-          <input
-            type='email'
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </div>
-        <button type='submit'>Add User</button>
-      </form>
-    </div>
+    <Box
+      component='form'
+      onSubmit={handleSubmit}
+      sx={{ p: 2, borderRadius: 2, boxShadow: 3 }}
+    >
+      <Typography variant='h6' gutterBottom>
+        Add New User
+      </Typography>
+      <TextField
+        label='Name'
+        variant='outlined'
+        fullWidth
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        required
+        sx={{ mb: 2 }}
+      />
+      <FormControl fullWidth sx={{ mb: 2 }}>
+        <InputLabel>Role</InputLabel>
+        <Select
+          value={role}
+          onChange={(e) => setRole(e.target.value)}
+          label='Role'
+        >
+          <MenuItem value='employee'>Employee</MenuItem>
+          <MenuItem value='manager'>Manager</MenuItem>
+          <MenuItem value='admin'>Admin</MenuItem>
+        </Select>
+      </FormControl>
+      <Button variant='contained' color='primary' type='submit' fullWidth>
+        Add User
+      </Button>
+    </Box>
   );
 };
 
