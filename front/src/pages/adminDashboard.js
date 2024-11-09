@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Grid, Typography } from '@mui/material';
 import AddUser from '../components/addUser';
-import UserList from '../components/userList';
+import UserList from '../components/userlist';
 import StatsPanel from '../components/statsPanel';
 import { getAllUsers, fetchUserCounts, fetchGroupCount } from '../services/api';
 
