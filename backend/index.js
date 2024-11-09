@@ -9,10 +9,10 @@ const groupRouter = require('./routes/groupRouter');
 const expenseRouter = require('./routes/expenseRouter');
 app.use(
   cors({
-    origin: 'http://localhost:3000', // specify your frontend's address
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    credentials: true,
-    allowedHeaders: ['Content-Type', 'Authorization'],
+    // origin: 'http://localhost:3000', // specify your frontend's address
+    // methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    // credentials: true,
+    // allowedHeaders: ['Content-Type', 'Authorization'],
   })
 );
 
