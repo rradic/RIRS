@@ -58,3 +58,12 @@ export const fetchGroupCount = async () => {
     return 0;
   }
 };
+export const addGroup = async (groupData) => {
+  try {
+    const response = await api.post('/groups', groupData);
+    return response.data;
+  } catch (error) {
+    console.error('Error creating group', error);
+    throw error;
+  }
+};
