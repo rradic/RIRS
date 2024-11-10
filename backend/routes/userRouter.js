@@ -1,11 +1,11 @@
 const express = require('express');
-const User = require('../schemas/user'); 
+const User = require('../schemas/user');
 const router = express.Router();
 const crypto = require('crypto');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-const JWT_SECRET = 'Vkm123vkm$$$'; 
+const JWT_SECRET = 'Vkm123vkm$$$';
 
 // Get all users
 router.get('/', async (req, res) => {
@@ -69,10 +69,16 @@ router.post('/login', async (req, res) => {
     if (!user) return res.status(404).json({ message: 'User not found' });
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
-    if (!isPasswordValid) return res.status(401).json({ message: 'Invalid credentials' });
+    if (!isPasswordValid)
+      return res.status(401).json({ message: 'Invalid credentials' });
 
-    const token = jwt.sign({ userId: user._id, role: user.role }, JWT_SECRET, { expiresIn: '1h' });
-    res.json({ token, user: { name: user.name, email: user.email, role: user.role } });
+    const token = jwt.sign({ userId: user._id, role: user.role }, JWT_SECRET, {
+      expiresIn: '1h',
+    });
+    res.json({
+      token,
+      user: { name: user.name, email: user.email, role: user.role },
+    });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

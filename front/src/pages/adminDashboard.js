@@ -3,6 +3,8 @@ import { Container, Grid, Typography } from '@mui/material';
 import AddUser from '../components/addUser';
 import UserList from '../components/userlist';
 import StatsPanel from '../components/statsPanel';
+import AddGroup from '../components/addGroup';
+
 import { getAllUsers, fetchUserCounts, fetchGroupCount } from '../services/api';
 
 const AdminDashboard = () => {
@@ -51,12 +53,18 @@ const AdminDashboard = () => {
         groups={groupsCount}
       />
 
-      {/* Add User and User List Panels */}
       <Grid container spacing={4}>
         <Grid item xs={12} md={6}>
           <AddUser onUserAdded={refreshUserData} />
         </Grid>
         <Grid item xs={12} md={6}>
+          <AddGroup users={users} onGroupAdded={refreshUserData} />
+        </Grid>
+      </Grid>
+
+      {/* User List Panel */}
+      <Grid container spacing={4} sx={{ mt: 4 }}>
+        <Grid item xs={12}>
           <UserList users={users} />
         </Grid>
       </Grid>

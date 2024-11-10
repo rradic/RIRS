@@ -14,15 +14,16 @@ import {
 const AddUser = ({ onUserAdded }) => {
   const [name, setName] = useState('');
   const [role, setRole] = useState('employee');
+  const [plainPassword, setPlainPassword] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const user = { name, role };
     try {
-      await addUser(user);
-      alert('User added successfully!');
-      setName(name);
-      setRole(role);
+      const response = await addUser(user);
+      setPlainPassword(response.plainPassword);
+      setName('');
+      setRole('employee');
       onUserAdded();
     } catch (error) {
       alert('Error adding user');
@@ -62,6 +63,13 @@ const AddUser = ({ onUserAdded }) => {
       <Button variant='contained' color='primary' type='submit' fullWidth>
         Add User
       </Button>
+      {plainPassword && (
+        <div>
+          <p>
+            Temporary Password: <strong>{plainPassword}</strong>
+          </p>
+        </div>
+      )}
     </Box>
   );
 };
