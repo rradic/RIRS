@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 const userRouter = require('./routes/userRouter');
 const groupRouter = require('./routes/groupRouter');
 const expenseRouter = require('./routes/expenseRouter');
+const managerRouter = require('./routes/managerRouter');
 app.use(
   cors({
     // origin: 'http://localhost:3000', // specify your frontend's address
@@ -20,6 +21,7 @@ const defineRoutes = () => {
   app.use('/api/users', userRouter);
   app.use('/api/groups', groupRouter);
   app.use('/api/expenses', expenseRouter);
+  app.use('/api/manager', managerRouter);
 };
 
 const initServer = async () => {

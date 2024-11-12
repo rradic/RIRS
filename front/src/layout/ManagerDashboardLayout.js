@@ -1,0 +1,83 @@
+import {Box, Container, Grid,  Tab, Tabs, Typography} from "@mui/material";
+import React from "react";
+import EmployeesList from "../components/EmployeesList";
+
+function CustomTabPanel(props) {
+    const { children, value, index, ...other } = props;
+
+    return (
+        <div
+            role="tabpanel"
+            hidden={value !== index}
+            id={`simple-tabpanel-${index}`}
+            aria-labelledby={`simple-tab-${index}`}
+            {...other}
+        >
+            {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
+        </div>
+    );
+}
+
+
+function a11yProps(index) {
+    return {
+        id: `simple-tab-${index}`,
+        'aria-controls': `simple-tabpanel-${index}`,
+    };
+}
+
+const ManagerDashboardLayout = () => {
+
+    const [value, setValue] = React.useState(0);
+
+    const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+        setValue(newValue);
+    };
+
+    return (
+        <Container maxWidth='lg' sx={{ mt: 4 }}>
+            <Typography variant='h4' gutterBottom>
+                Manager Dashboard
+            </Typography>
+
+            <Box sx={{ width: '100%' }}>
+                <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                    <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+                        <Tab label="Requests" {...a11yProps(0)} />
+                        <Tab label="Employees" {...a11yProps(1)} />
+                    </Tabs>
+                </Box>
+                <CustomTabPanel value={value} index={0}>
+                    Item One
+                </CustomTabPanel>
+                <CustomTabPanel value={value} index={1}>
+                    <EmployeesList/>
+                </CustomTabPanel>
+            </Box>
+            {/*/!* Stats Panel *!/*/}
+            {/*<StatsPanel*/}
+            {/*    employees={employeesCount}*/}
+            {/*    managers={managersCount}*/}
+            {/*    groups={groupsCount}*/}
+            {/*/>*/}
+
+            {/*<Grid container spacing={4}>*/}
+            {/*    <Grid item xs={12} md={6}>*/}
+            {/*        <AddUser onUserAdded={refreshUserData} />*/}
+            {/*    </Grid>*/}
+            {/*    <Grid item xs={12} md={6}>*/}
+            {/*        <AddGroup users={users} onGroupAdded={refreshUserData} />*/}
+            {/*    </Grid>*/}
+            {/*</Grid>*/}
+
+            {/*/!* User List Panel *!/*/}
+            {/*<Grid container spacing={4} sx={{ mt: 4 }}>*/}
+            {/*    <Grid item xs={12}>*/}
+            {/*        <UserList users={users} />*/}
+            {/*    </Grid>*/}
+            {/*</Grid>*/}
+        </Container>
+    )
+}
+
+export default ManagerDashboardLayout;

@@ -1,12 +1,13 @@
 const express = require('express');
 const Group = require('../schemas/group');
+const GroupService = require('../services/groupService');
 
 const router = express.Router();
 
 // Get all groups
 router.get('/', async (req, res) => {
   try {
-    const groups = await Group.find().populate('members');
+    const groups = await GroupService.getGroups();
     res.json(groups);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -16,7 +17,7 @@ router.get('/', async (req, res) => {
 // Get a single group by ID
 router.get('/:id', async (req, res) => {
   try {
-    const group = await Group.findById(req.params.id).populate('members');
+    const group = (new GroupService(req.params.id)).getGroup();
     if (!group) return res.status(404).json({ message: 'Group not found' });
     res.json(group);
   } catch (err) {
@@ -26,10 +27,9 @@ router.get('/:id', async (req, res) => {
 
 // Create a new group
 router.post('/', async (req, res) => {
-  const group = new Group(req.body);
   try {
-    const newGroup = await group.save();
-    res.status(201).json(newGroup);
+    const group = GroupService.createGroup(req.body);
+    res.status(201).json(group);
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
@@ -38,11 +38,7 @@ router.post('/', async (req, res) => {
 // Update group by ID
 router.put('/:id', async (req, res) => {
   try {
-    const updatedGroup = await Group.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      { new: true }
-    );
+    const updatedGroup = (new GroupService(req.params.id)).updateGroup(req.body);
     if (!updatedGroup)
       return res.status(404).json({ message: 'Group not found' });
     res.json(updatedGroup);
@@ -54,7 +50,8 @@ router.put('/:id', async (req, res) => {
 // Delete group by ID
 router.delete('/:id', async (req, res) => {
   try {
-    const deletedGroup = await Group.findByIdAndDelete(req.params.id);
+    const deletedGroup = new GroupService(req.params.id);
+    await deletedGroup.deleteGroup()
     if (!deletedGroup)
       return res.status(404).json({ message: 'Group not found' });
     res.json({ message: 'Group deleted' });
