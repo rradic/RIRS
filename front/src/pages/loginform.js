@@ -1,24 +1,51 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import { TextField, Button, Typography, Container, Alert, Box } from '@mui/material';
+import React, { useState } from "react";
+import axios from "axios";
+import {
+  TextField,
+  Button,
+  Typography,
+  Container,
+  Alert,
+  Box,
+} from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const [token, setToken] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [token, setToken] = useState("");
+  const [user, setUser] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
+    setError("");
 
     try {
-      const response = await axios.post('http://localhost:3000/api/users/login', { email, password });
+      const response = await axios.post(
+        "http://localhost:3000/api/users/login",
+        { email, password }
+      );
       setToken(response.data.token);
-      localStorage.setItem('token', response.data.token); // Store the token in localStorage
-      alert('Login successful');
+      const { user } = response.data;
+      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("user", JSON.stringify(user));
+      setUser(user);
+
+      if (user.role === "admin") {
+        navigate("/dashboard");
+      } else if (user.role === "employee") {
+        navigate("/employee");
+      } else if (user.role === "manager") {
+        navigate("/manager");
+      } else {
+        navigate("/");
+      }
+
+      alert("Login successful");
     } catch (err) {
-      setError('Invalid email or password');
+      setError("Invalid email or password");
     }
   };
 
@@ -54,7 +81,7 @@ const LoginForm = () => {
             fullWidth
             variant="contained"
             color="primary"
-            style={{ marginTop: '16px' }}
+            style={{ marginTop: "16px" }}
           >
             Login
           </Button>

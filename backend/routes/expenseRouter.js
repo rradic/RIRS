@@ -14,6 +14,26 @@ router.get('/', async (req, res) => {
   }
 });
 
+// Get all expenses for a specific user by userId
+router.get('/:userId', async (req, res) => {
+  try {
+    // Fetch expenses filtered by userId
+    const expenses = await Expense.find({ user: req.params.userId })
+      .populate('user') // Populate user data
+      .populate('group'); // Populate group data
+
+    // Check if expenses exist for the user
+    if (!expenses || expenses.length === 0) {
+      return res.status(404).json({ message: 'No expenses found for this user' });
+    }
+
+    res.json(expenses); // Return the found expenses
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+
 // Get a single expense by ID
 router.get('/:id', async (req, res) => {
   try {
