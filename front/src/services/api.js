@@ -173,3 +173,13 @@ export const declineRequest = async (id) => {
     throw error;
   }
 };
+
+export const fetchEmployees = async () => {
+  try {
+    const response = await api.get('/manager');
+    return response.data;
+  } catch (error) {
+    console.error('Error creating group', error);
+    throw error;
+  }
+}
