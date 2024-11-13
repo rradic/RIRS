@@ -1,7 +1,7 @@
 const Group = require("../schemas/group");
 
 class GroupService {
-    private _id;
+    _id;
 
     constructor(id) {
         this._id = id;
