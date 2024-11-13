@@ -24,6 +24,8 @@ function App() {
       <Routes>
         <Route path="/login" element={<LoginForm />} />
         <Route path="/dashboard" element={<AdminDashboard />} />
+        <Route path="/dashboard" element={<AdminDashboard/>} />
+        <Route path="/manager" element={<ManagerDashboardLayout/>} />
         {/* <Route
           path="/dashboard"
           element={
@@ -33,14 +35,13 @@ function App() {
           }
         />{" "} */}
         <Route
-          path="/employee-expenses"
+          path="/employee"
           element={
             <ProtectedRoute user={user} role="employee">
               <EmployeeExpensePage user={user} />
             </ProtectedRoute>
           }
         />{" "}
-        <Route path="/manager" element={<ManagerDashboardLayout/>} />
       </Routes>
     </Router>
   );

@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="64dee8f6-f2dd-4a22-a144-5c6847284587" name="Changes" comment="">
+<<<<<<< HEAD
       <change afterPath="$PROJECT_DIR$/backend/routes/managerRouter.js" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/backend/services/ExpensesService.js" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/backend/services/GroupService.js" afterDir="false" />
@@ -18,6 +19,15 @@
       <change beforePath="$PROJECT_DIR$/front/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/front/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/front/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/front/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/front/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/App.js" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/services/ExpensesService.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/services/ExpensesService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/src/components/GroupRequests.js" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/components/GroupRequests.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/src/components/RecentRequests.js" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/components/RecentRequests.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/src/components/UserRequests.js" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/components/UserRequests.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/src/layout/ManagerDashboardLayout.js" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/layout/ManagerDashboardLayout.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/src/services/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/services/api.js" afterDir="false" />
+>>>>>>> origin/main
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,6 +53,7 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
+<<<<<<< HEAD
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
@@ -57,6 +68,22 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+=======
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feature-frontend-manager-dashborad&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/PC/Desktop/RIRS/rirs_vaje/RIRS&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\PC\\AppData\\Local\\Programs\\WebStorm\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+>>>>>>> origin/main
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -76,7 +103,10 @@
       <workItem from="1731258276745" duration="8800000" />
       <workItem from="1731442424834" duration="447000" />
       <workItem from="1731444025221" duration="14587000" />
+<<<<<<< HEAD
       <workItem from="1731498903577" duration="355000" />
+=======
+>>>>>>> origin/main
     </task>
     <servers />
   </component>

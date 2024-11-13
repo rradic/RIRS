@@ -1,6 +1,9 @@
 import {Box, Container, Grid,  Tab, Tabs, Typography} from "@mui/material";
 import React from "react";
 import EmployeesList from "../components/EmployeesList";
+import UserRequests from "../components/UserRequests";
+import GroupRequests from "../components/GroupRequests";
+import RecentRequests from "../components/RecentRequests";
 
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -13,7 +16,7 @@ function CustomTabPanel(props) {
             aria-labelledby={`simple-tab-${index}`}
             {...other}
         >
-            {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
+            {value === index && <Box sx={{ mt: 3 }}>{children}</Box>}
         </div>
     );
 }
@@ -47,35 +50,22 @@ const ManagerDashboardLayout = () => {
                         <Tab label="Employees" {...a11yProps(1)} />
                     </Tabs>
                 </Box>
-                <CustomTabPanel value={value} index={0}>
-                    Item One
-                </CustomTabPanel>
+                <CustomTabPanel sx={{ flexGrow: 1 }} value={value} index={0}>
+                    <Grid container spacing={1}>
+                        <Grid item xs={6}>
+                            <UserRequests/>
+                        </Grid>
+                        <Grid item xs={6}>
+                            <GroupRequests/>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <RecentRequests/>
+                        </Grid>
+                    </Grid>                </CustomTabPanel>
                 <CustomTabPanel value={value} index={1}>
                     <EmployeesList/>
                 </CustomTabPanel>
             </Box>
-            {/*/!* Stats Panel *!/*/}
-            {/*<StatsPanel*/}
-            {/*    employees={employeesCount}*/}
-            {/*    managers={managersCount}*/}
-            {/*    groups={groupsCount}*/}
-            {/*/>*/}
-
-            {/*<Grid container spacing={4}>*/}
-            {/*    <Grid item xs={12} md={6}>*/}
-            {/*        <AddUser onUserAdded={refreshUserData} />*/}
-            {/*    </Grid>*/}
-            {/*    <Grid item xs={12} md={6}>*/}
-            {/*        <AddGroup users={users} onGroupAdded={refreshUserData} />*/}
-            {/*    </Grid>*/}
-            {/*</Grid>*/}
-
-            {/*/!* User List Panel *!/*/}
-            {/*<Grid container spacing={4} sx={{ mt: 4 }}>*/}
-            {/*    <Grid item xs={12}>*/}
-            {/*        <UserList users={users} />*/}
-            {/*    </Grid>*/}
-            {/*</Grid>*/}
         </Container>
     )
 }

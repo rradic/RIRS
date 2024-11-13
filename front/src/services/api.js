@@ -7,6 +7,15 @@ const api = axios.create({
   },
 });
 
+const apiCsv = axios.create({
+  baseURL: '/api',
+  headers: {
+    'Accept': 'text/csv',
+    'Content-Type': 'text/csv',
+    "Content-Disposition": "attachment;filename=expenses.csv",
+  },
+});
+
 export const getAllUsers = async () => {
   try {
     const response = await api.get("/users");
@@ -104,3 +113,73 @@ export const requestExpense = async (expenseData) => {
     throw error;
   }
 };
+
+export const fetchUsersRequests = async () => {
+  try {
+    const response = await api.get('/manager/requests/users');
+    return response.data;
+  } catch (error) {
+    console.error('Error creating group', error);
+    throw error;
+  }
+};
+
+export const fetchGroupsRequests = async () => {
+  try {
+    const response = await api.get('/manager/requests/group');
+    return response.data;
+  } catch (error) {
+    console.error('Error creating group', error);
+    throw error;
+  }
+};
+
+export const fetchRecentRequests = async () => {
+  try {
+    const response = await api.get('/manager/requests/recent');
+    return response.data;
+  } catch (error) {
+    console.error('Error creating group', error);
+    throw error;
+  }
+};
+
+export const handleDownloadCsv = () => {
+  const tempLink = document.createElement('a')
+  tempLink.href = 'http://localhost:3000/api/manager/requests/recentCsv'
+  tempLink.click()
+}
+
+export const approveRequest = async (id) => {
+  try {
+    const response = await api.put('/expenses/' + id,
+        { status: 'approved', updatedAt: new Date()}
+    );
+    return response.data;
+  } catch (error) {
+    console.error('Error creating group', error);
+    throw error;
+  }
+};
+
+export const declineRequest = async (id) => {
+  try {
+    const response = await api.put('/expenses/' + id,
+        { status: 'declined', updatedAt: new Date()}
+    );
+    return response.data;
+  } catch (error) {
+    console.error('Error creating group', error);
+    throw error;
+  }
+};
+
+export const fetchEmployees = async () => {
+  try {
+    const response = await api.get('/manager');
+    return response.data;
+  } catch (error) {
+    console.error('Error creating group', error);
+    throw error;
+  }
+}
