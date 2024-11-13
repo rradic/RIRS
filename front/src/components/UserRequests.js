@@ -1,9 +1,13 @@
 import {Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
-import {fetchUsersRequests} from "../services/api";
+import {fetchUsersRequests, approveRequest, declineRequest} from "../services/api";
 import {useEffect, useState} from "react";
 
-const approveRequest = (id) => {
+const approveRequestApi = async (id) => {
+    await approveRequest(id)
+}
 
+const declineRequestApi = async (id) => {
+    await declineRequest(id)
 }
 
 const UserRequests = () => {
@@ -27,16 +31,6 @@ const UserRequests = () => {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {console.log(usersRequests.length)}
-                    {usersRequests.length === 0 ? () =>
-                        (
-                            <TableRow>
-                                <TableCell component="th" scope="row">
-                                    No requests
-                                </TableCell>
-                            </TableRow>
-                        ) : null
-                    }
                     {usersRequests.map((row) => (
                         <TableRow
                             key={row}
@@ -55,11 +49,10 @@ const UserRequests = () => {
                             <TableCell component="th" scope="row">
                                 {row.description}
                             </TableCell>
-                            <Button onclick={approveRequest()}></Button>
-                            {/*<TableCell align="right">{row.calories}</TableCell>*/}
-                            {/*<TableCell align="right">{row.fat}</TableCell>*/}
-                            {/*<TableCell align="right">{row.carbs}</TableCell>*/}
-                            {/*<TableCell align="right">{row.protein}</TableCell>*/}
+                            <TableCell component="th" scope="row">
+                                <Button onClick={approveRequestApi(row._id)}>Approve</Button>
+                                <Button onClick={declineRequestApi(row._id)}>Decline</Button>
+                            </TableCell>
                         </TableRow>
                     ))}
                 </TableBody>

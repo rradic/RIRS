@@ -51,11 +51,11 @@ const ManagerDashboardLayout = () => {
                     </Tabs>
                 </Box>
                 <CustomTabPanel sx={{ flexGrow: 1 }} value={value} index={0}>
-                    <Grid container spacing={2}>
-                        <Grid item xs={12}>
+                    <Grid container spacing={1}>
+                        <Grid item xs={6}>
                             <UserRequests/>
                         </Grid>
-                        <Grid item xs={12}>
+                        <Grid item xs={6}>
                             <GroupRequests/>
                         </Grid>
                         <Grid item xs={12}>

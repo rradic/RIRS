@@ -1,6 +1,10 @@
 import {useEffect, useState} from "react";
-import {fetchGroupsRequests, fetchRecentRequests} from "../services/api";
-import {Avatar, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
+import {fetchRecentRequests, handleDownloadCsv} from "../services/api";
+import {Avatar, Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
+
+const fetchRecentRequestsCsvApi = async () => {
+    await handleDownloadCsv()
+}
 
 const RecentRequests = () => {
     const [usersRequests, setUsersRequests] = useState([]);
@@ -19,6 +23,9 @@ const RecentRequests = () => {
                 <TableHead>
                     <TableRow>
                         <TableCell>Recent request</TableCell>
+                        <TableCell>
+                            <Button onClick={fetchRecentRequestsCsvApi}>Export csv</Button>
+                        </TableCell>
                     </TableRow>
                     <TableRow>
                         <TableCell>User</TableCell>

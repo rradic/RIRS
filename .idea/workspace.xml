@@ -5,9 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="64dee8f6-f2dd-4a22-a144-5c6847284587" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/front/src/components/GroupRequests.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/front/src/components/RecentRequests.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/front/src/components/UserRequests.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/services/ExpensesService.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/services/ExpensesService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/src/components/GroupRequests.js" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/components/GroupRequests.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/src/components/RecentRequests.js" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/components/RecentRequests.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/src/components/UserRequests.js" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/components/UserRequests.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/front/src/layout/ManagerDashboardLayout.js" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/layout/ManagerDashboardLayout.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/front/src/services/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/services/api.js" afterDir="false" />
     </list>
@@ -35,20 +37,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "feature-frontend-manager-dashborad",
-    "last_opened_file_path": "C:/Users/PC/Desktop/RIRS/rirs_vaje/RIRS",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "ts.external.directory.path": "C:\\Users\\PC\\AppData\\Local\\Programs\\WebStorm\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feature-frontend-manager-dashborad&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/PC/Desktop/RIRS/rirs_vaje/RIRS&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\PC\\AppData\\Local\\Programs\\WebStorm\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>

@@ -1,10 +1,14 @@
 import {useEffect, useState} from "react";
-import {fetchGroupsRequests, fetchUsersRequests} from "../services/api";
+import {approveRequest, declineRequest, fetchGroupsRequests, fetchUsersRequests} from "../services/api";
 import {Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 
 
-const approveRequest = (id) => {
+const approveRequestApi = async (id) => {
+    await approveRequest(id)
+}
 
+const declineRequestApi = async (id) => {
+    await declineRequest(id)
 }
 
 const GroupRequests = () => {
@@ -41,7 +45,6 @@ const GroupRequests = () => {
                             key={row}
                             sx={{'&:last-child td, &:last-child th': {border: 0}}}
                         >
-                            {console.log(row)}
                             <TableCell component="th" scope="row">
                                 {row.user.name}
                             </TableCell>
@@ -54,11 +57,10 @@ const GroupRequests = () => {
                             <TableCell component="th" scope="row">
                                 {row.description}
                             </TableCell>
-                            {/*<Button onclick={approveRequest()}></Button>*/}
-                            {/*<TableCell align="right">{row.calories}</TableCell>*/}
-                            {/*<TableCell align="right">{row.fat}</TableCell>*/}
-                            {/*<TableCell align="right">{row.carbs}</TableCell>*/}
-                            {/*<TableCell align="right">{row.protein}</TableCell>*/}
+                            <TableCell component="th" scope="row">
+                                <Button onClick={approveRequestApi(row._id)}>Approve</Button>
+                                <Button onClick={declineRequestApi(row._id)}>Decline</Button>
+                            </TableCell>
                         </TableRow>
                     ))}
                 </TableBody>
