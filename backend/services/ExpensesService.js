@@ -32,12 +32,17 @@ class ExpenseService {
         let values = ''
         for (let expense of expenses) {
             let row = '';
+            console.log(expense)
             row += expense._id + ',';
             row += expense.amount + ',';
             row += expense.description + ',';
             row += expense.status + ',';
             row += expense.user.name + ',';
-            row += expense.group.name + ',';
+            if (expense.group !== null) {
+                row += expense.group.name + ',';
+            } else {
+                row += ' ' + ',';
+            }
             row += expense.createdAt.toLocaleDateString('sl-SL')
                 + expense.createdAt.toLocaleTimeString('sl-SL'); + ',';
             row += expense.updatedAt.toLocaleDateString('sl-SL')

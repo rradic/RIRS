@@ -6,12 +6,6 @@ import AdminDashboard from "./pages/adminDashboard";
 import LoginForm from "./pages/loginform";
 import EmployeeExpensePage from "./pages/employeeExpensePage";
 import ProtectedRoute from "./components/ProtectedRoute";
-
-import AdminDashboard from "./pages/adminDashboard";
-import LoginForm from "./pages/loginform";
-import EmployeeExpensePage from "./pages/employeeExpensePage";
-import ProtectedRoute from "./components/ProtectedRoute";
-
 import ManagerDashboardLayout from "./layout/ManagerDashboardLayout";
 
 function App() {
