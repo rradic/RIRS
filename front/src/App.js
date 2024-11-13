@@ -23,6 +23,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/login" element={<LoginForm />} />
+        <Route path="/dashboard" element={<AdminDashboard />} />
         <Route path="/dashboard" element={<AdminDashboard/>} />
         <Route path="/manager" element={<ManagerDashboardLayout/>} />
         {/* <Route
