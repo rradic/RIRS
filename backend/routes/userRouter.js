@@ -1,14 +1,14 @@
-const express = require('express');
-const User = require('../schemas/user');
+const express = require("express");
+const User = require("../schemas/user");
 const router = express.Router();
-const crypto = require('crypto');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
+const crypto = require("crypto");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
-const JWT_SECRET = 'Vkm123vkm$$$';
+const JWT_SECRET = "Vkm123vkm$$$";
 
 // Get all users
-router.get('/', async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const users = await User.find();
     res.json(users);
@@ -18,10 +18,10 @@ router.get('/', async (req, res) => {
 });
 
 // Get a single user by ID
-router.get('/:id', async (req, res) => {
+router.get("/:id", async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
-    if (!user) return res.status(404).json({ message: 'User not found' });
+    if (!user) return res.status(404).json({ message: "User not found" });
     res.json(user);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -29,11 +29,11 @@ router.get('/:id', async (req, res) => {
 });
 
 // Create a new user
-router.post('/', async (req, res) => {
+router.post("/", async (req, res) => {
   const { name, role } = req.body;
 
   // Generate email based on name
-  const email = `${name.replace(/\s+/g, '').toLowerCase()}@company.com`;
+  const email = `${name.replace(/\s+/g, "").toLowerCase()}@company.com`;
 
   // Generate a random password
   const plainPassword = Math.random().toString(36).slice(-8);
@@ -61,19 +61,19 @@ router.post('/', async (req, res) => {
 });
 
 // Login user and generate JWT
-router.post('/login', async (req, res) => {
+router.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
   try {
     const user = await User.findOne({ email });
-    if (!user) return res.status(404).json({ message: 'User not found' });
+    if (!user) return res.status(404).json({ message: "User not found" });
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid)
-      return res.status(401).json({ message: 'Invalid credentials' });
+      return res.status(401).json({ message: "Invalid credentials" });
 
     const token = jwt.sign({ userId: user._id, role: user.role }, JWT_SECRET, {
-      expiresIn: '1h',
+      expiresIn: "1h",
     });
     res.json({
       token,
@@ -86,29 +86,29 @@ router.post('/login', async (req, res) => {
 
 // JWT authentication middleware for protected routes
 const authenticateToken = (req, res, next) => {
-  const token = req.headers['authorization']?.split(' ')[1];
-  if (!token) return res.status(401).json({ message: 'Access token required' });
+  const token = req.headers["authorization"]?.split(" ")[1];
+  if (!token) return res.status(401).json({ message: "Access token required" });
 
   jwt.verify(token, JWT_SECRET, (err, user) => {
-    if (err) return res.status(403).json({ message: 'Invalid token' });
+    if (err) return res.status(403).json({ message: "Invalid token" });
     req.user = user;
     next();
   });
 };
 
 // Example of a protected route using JWT authentication
-router.get('/protected', authenticateToken, (req, res) => {
-  res.json({ message: 'This is a protected route', user: req.user });
+router.get("/protected", authenticateToken, (req, res) => {
+  res.json({ message: "This is a protected route", user: req.user });
 });
 
 // Update user by ID
-router.put('/:id', async (req, res) => {
+router.put("/:id", async (req, res) => {
   try {
     const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
     });
     if (!updatedUser)
-      return res.status(404).json({ message: 'User not found' });
+      return res.status(404).json({ message: "User not found" });
     res.json(updatedUser);
   } catch (err) {
     res.status(400).json({ message: err.message });
@@ -116,12 +116,12 @@ router.put('/:id', async (req, res) => {
 });
 
 // Delete user by ID
-router.delete('/:id', async (req, res) => {
+router.delete("/:id", async (req, res) => {
   try {
     const deletedUser = await User.findByIdAndDelete(req.params.id);
     if (!deletedUser)
-      return res.status(404).json({ message: 'User not found' });
-    res.json({ message: 'User deleted' });
+      return res.status(404).json({ message: "User not found" });
+    res.json({ message: "User deleted" });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
