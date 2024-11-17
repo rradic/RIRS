@@ -5,7 +5,6 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import AdminDashboard from "./pages/adminDashboard";
 import LoginForm from "./pages/loginform";
 import EmployeeExpensePage from "./pages/employeeExpensePage";
-import ProtectedRoute from "./components/ProtectedRoute";
 import ManagerDashboardLayout from "./layout/ManagerDashboardLayout";
 import { jwtDecode } from "jwt-decode";
 
@@ -49,31 +48,10 @@ function App() {
       <Routes>
         <Route path="/" element={<LoginForm />} />
         <Route path="/login" element={<LoginForm />} />
-        {/* <Route path="/manager" element={<ManagerDashboardLayout />} /> */}
-        <Route
-          path="/manager"
-          element={
-            <ProtectedRoute user={user} role="manager">
-              <ManagerDashboardLayout user={user} />
-            </ProtectedRoute>
-          }
-        />{" "}
-        <Route
-          path="/dashboard"
-          element={
-            <ProtectedRoute user={user} role="admin">
-              <AdminDashboard user={user} />
-            </ProtectedRoute>
-          }
-        />{" "}
-        <Route
-          path="/employee"
-          element={
-            <ProtectedRoute user={user} role="employee">
-              <EmployeeExpensePage user={user} />
-            </ProtectedRoute>
-          }
-        />{" "}
+        <Route path="/manager" element={<ManagerDashboardLayout />} />
+        <Route path="/dashboard" element={<AdminDashboard />} />
+        <Route path="/employee" element={<EmployeeExpensePage />} />
+       
       </Routes>
     </Router>
   );
