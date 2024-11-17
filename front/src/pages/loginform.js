@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import {
   TextField,
@@ -18,6 +18,21 @@ const LoginForm = () => {
   const [user, setUser] = useState("");
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      if (user.role === "admin") {
+        navigate("/dashboard");
+      } else if (user.role === "employee") {
+        navigate("/employee");
+      } else if (user.role === "manager") {
+        navigate("/manager");
+      } else {
+        navigate("/");
+      }
+    }
+  }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
@@ -32,7 +47,6 @@ const LoginForm = () => {
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("user", JSON.stringify(user));
       setUser(user);
-
       if (user.role === "admin") {
         navigate("/dashboard");
       } else if (user.role === "employee") {

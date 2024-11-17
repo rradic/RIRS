@@ -73,8 +73,10 @@ router.post("/login", async (req, res) => {
       return res.status(401).json({ message: "Invalid credentials" });
 
     const token = jwt.sign({ userId: user._id, role: user.role }, JWT_SECRET, {
-      expiresIn: "1h",
+      expiresIn: "6h",
     });
+    console.log("Login successful for:", user.email);
+
     res.json({
       token,
       user: { name: user.name, email: user.email, role: user.role },
@@ -126,6 +128,5 @@ router.delete("/:id", async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
-
 
 module.exports = router;
