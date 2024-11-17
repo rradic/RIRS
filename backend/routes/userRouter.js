@@ -94,7 +94,11 @@ const authenticateToken = (req, res, next) => {
   jwt.verify(token, JWT_SECRET, (err, user) => {
     if (err) return res.status(403).json({ message: "Invalid token" });
     req.user = user;
-    next();
+        if (user.role !== 'employee') {
+            return res.status(403).json({ message: "Only manager can access this resource" });
+        } else {
+            next();
+        }
   });
 };
 

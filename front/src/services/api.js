@@ -1,9 +1,11 @@
 import axios from "axios";
+const token = localStorage.getItem("token");
 
 const api = axios.create({
   baseURL: "/api",
   headers: {
     "Content-Type": "application/json",
+    "authorization": `Bearer ${token}` 
   },
 });
 
@@ -21,8 +23,20 @@ export const getAllUsers = async () => {
     const response = await api.get("/users");
     return response.data;
   } catch (error) {
-    console.error("Error fetching users", error);
-    throw error;
+    console.error('Error fetching employees', error);
+
+    // Check for 401 or 403 error and handle authorization failure
+    if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+      // Clear the token from local storage
+      localStorage.removeItem('token');
+      
+      // Redirect to the login page
+      window.location.href = '/login'
+      return;
+    }
+
+    // Optionally, you can return a default response or null to handle this failure gracefully
+    return null; // Or any default value you want to return
   }
 };
 
@@ -31,8 +45,20 @@ export const getUserById = async (userId) => {
     const response = await api.get(`/users/${userId}`);
     return response.data;
   } catch (error) {
-    console.error("Error fetching users", error);
-    throw error;
+    console.error('Error fetching employees', error);
+
+    // Check for 401 or 403 error and handle authorization failure
+    if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+      // Clear the token from local storage
+      localStorage.removeItem('token');
+      
+      // Redirect to the login page
+      window.location.href = '/login'
+      return;
+    }
+
+    // Optionally, you can return a default response or null to handle this failure gracefully
+    return null; // Or any default value you want to return
   }
 };
 
@@ -46,8 +72,20 @@ export const getGroups = async () => {
     const response = await api.get(`/groups`);
     return response.data;
   } catch (error) {
-    console.error("Error fetching users", error);
-    throw error;
+    console.error('Error fetching employees', error);
+
+    // Check for 401 or 403 error and handle authorization failure
+    if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+      // Clear the token from local storage
+      localStorage.removeItem('token');
+      
+      // Redirect to the login page
+      window.location.href = '/login'
+      return;
+    }
+
+    // Optionally, you can return a default response or null to handle this failure gracefully
+    return null; // Or any default value you want to return
   }
 };
 
@@ -66,8 +104,20 @@ export const fetchUserCounts = async () => {
 
     return { employeesCount, managersCount };
   } catch (error) {
-    console.error("Error fetching user counts:", error);
-    return { employeesCount: 0, managersCount: 0 };
+    console.error('Error fetching employees', error);
+
+    // Check for 401 or 403 error and handle authorization failure
+    if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+      // Clear the token from local storage
+      localStorage.removeItem('token');
+      
+      // Redirect to the login page
+      window.location.href = '/login';
+      return;
+    }
+
+    // Optionally, you can return a default response or null to handle this failure gracefully
+    return null; // Or any default value you want to return
   }
 };
 
@@ -76,8 +126,20 @@ export const addUser = async (userData) => {
     const response = await api.post("/users", userData);
     return response.data;
   } catch (error) {
-    console.error("Error creating user", error);
-    throw error;
+    console.error('Error fetching employees', error);
+
+    // Check for 401 or 403 error and handle authorization failure
+    if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+      // Clear the token from local storage
+      localStorage.removeItem('token');
+      
+      // Redirect to the login page
+      window.location.href = '/login'
+      return;
+    }
+
+    // Optionally, you can return a default response or null to handle this failure gracefully
+    return null; // Or any default value you want to return
   }
 };
 // Fetch groups and count them
@@ -89,8 +151,20 @@ export const fetchGroupCount = async () => {
 
     return groupsCount;
   } catch (error) {
-    console.error("Error fetching group count:", error);
-    return 0;
+    console.error('Error fetching employees', error);
+
+    // Check for 401 or 403 error and handle authorization failure
+    if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+      // Clear the token from local storage
+      localStorage.removeItem('token');
+      
+      // Redirect to the login page
+      window.location.href = '/login'
+      return;
+    }
+
+    // Optionally, you can return a default response or null to handle this failure gracefully
+    return null; // Or any default value you want to return
   }
 };
 export const addGroup = async (groupData) => {
@@ -98,8 +172,20 @@ export const addGroup = async (groupData) => {
     const response = await api.post("/groups", groupData);
     return response.data;
   } catch (error) {
-    console.error("Error creating group", error);
-    throw error;
+    console.error('Error fetching employees', error);
+
+    // Check for 401 or 403 error and handle authorization failure
+    if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+      // Clear the token from local storage
+      localStorage.removeItem('token');
+      
+      // Redirect to the login page
+      window.location.href = '/login'
+      return;
+    }
+
+    // Optionally, you can return a default response or null to handle this failure gracefully
+    return null; // Or any default value you want to return
   }
 };
 
@@ -109,8 +195,20 @@ export const requestExpense = async (expenseData) => {
     const response = await api.post("/expenses", expenseData);
     return response.data;
   } catch (error) {
-    console.error("Error requesting expense:", error);
-    throw error;
+    console.error('Error fetching employees', error);
+
+    // Check for 401 or 403 error and handle authorization failure
+    if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+      // Clear the token from local storage
+      localStorage.removeItem('token');
+      
+      // Redirect to the login page
+      window.location.href = '/login'
+      return;
+    }
+
+    // Optionally, you can return a default response or null to handle this failure gracefully
+    return null; // Or any default value you want to return
   }
 };
 
@@ -119,8 +217,20 @@ export const fetchUsersRequests = async () => {
     const response = await api.get('/manager/requests/users');
     return response.data;
   } catch (error) {
-    console.error('Error creating group', error);
-    throw error;
+    console.error('Error fetching employees', error);
+
+    // Check for 401 or 403 error and handle authorization failure
+    if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+      // Clear the token from local storage
+      localStorage.removeItem('token');
+      
+      // Redirect to the login page
+      window.location.href = '/login'
+      return;
+    }
+
+    // Optionally, you can return a default response or null to handle this failure gracefully
+    return null; // Or any default value you want to return
   }
 };
 
@@ -129,8 +239,20 @@ export const fetchGroupsRequests = async () => {
     const response = await api.get('/manager/requests/group');
     return response.data;
   } catch (error) {
-    console.error('Error creating group', error);
-    throw error;
+    console.error('Error fetching employees', error);
+
+    // Check for 401 or 403 error and handle authorization failure
+    if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+      // Clear the token from local storage
+      localStorage.removeItem('token');
+      
+      // Redirect to the login page
+      window.location.href = '/login'
+      return;
+    }
+
+    // Optionally, you can return a default response or null to handle this failure gracefully
+    return null; // Or any default value you want to return
   }
 };
 
@@ -139,9 +261,21 @@ export const fetchRecentRequests = async () => {
     const response = await api.get('/manager/requests/recent');
     return response.data;
   } catch (error) {
-    console.error('Error creating group', error);
-    throw error;
-  }
+      console.error('Error fetching employees', error);
+  
+      // Check for 401 or 403 error and handle authorization failure
+      if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+        // Clear the token from local storage
+        localStorage.removeItem('token');
+        
+        // Redirect to the login page
+        window.location.href = '/login';
+        return;
+      }
+  
+      // Optionally, you can return a default response or null to handle this failure gracefully
+      return null; // Or any default value you want to return
+    }
 };
 
 export const handleDownloadCsv = () => {
@@ -157,9 +291,21 @@ export const approveRequest = async (id) => {
     );
     return response.data;
   } catch (error) {
-    console.error('Error creating group', error);
-    throw error;
-  }
+      console.error('Error fetching employees', error);
+  
+      // Check for 401 or 403 error and handle authorization failure
+      if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+        // Clear the token from local storage
+        localStorage.removeItem('token');
+        
+        // Redirect to the login page
+        window.location.href = '/login';
+        return;
+      }
+  
+      // Optionally, you can return a default response or null to handle this failure gracefully
+      return null; // Or any default value you want to return
+    }
 };
 
 export const declineRequest = async (id) => {
@@ -169,8 +315,20 @@ export const declineRequest = async (id) => {
     );
     return response.data;
   } catch (error) {
-    console.error('Error creating group', error);
-    throw error;
+    console.error('Error fetching employees', error);
+
+    // Check for 401 or 403 error and handle authorization failure
+    if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+      // Clear the token from local storage
+      localStorage.removeItem('token');
+      
+      // Redirect to the login page
+      window.location.href = '/login';
+      return;
+    }
+
+    // Optionally, you can return a default response or null to handle this failure gracefully
+    return null; // Or any default value you want to return
   }
 };
 
@@ -179,7 +337,19 @@ export const fetchEmployees = async () => {
     const response = await api.get('/manager');
     return response.data;
   } catch (error) {
-    console.error('Error creating group', error);
-    throw error;
+    console.error('Error fetching employees', error);
+
+    // Check for 401 or 403 error and handle authorization failure
+    if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+      // Clear the token from local storage
+      localStorage.removeItem('token');
+      
+      // Redirect to the login page
+      window.location.href = '/login'
+      return;
+    }
+
+    // Optionally, you can return a default response or null to handle this failure gracefully
+    return null; // Or any default value you want to return
   }
-}
+};
