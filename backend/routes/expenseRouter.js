@@ -1,11 +1,25 @@
 const express = require('express');
 const Expense = require('../schemas/expense');
 const ExpenseService = require("../services/ExpensesService");
+const jwt = require("jsonwebtoken");
+
+const JWT_SECRET = "Vkm123vkm$$$";
 
 const router = express.Router();
 
+const authenticateToken = (req, res, next) => {
+  const token = req.headers["authorization"]?.split(" ")[1];
+  if (!token) return res.status(401).json({ message: "Access token required" });
+
+  jwt.verify(token, JWT_SECRET, (err, user) => {
+    if (err) return res.status(403).json({ message: "Invalid token" });
+    req.user = user;
+    next();      
+  });
+};
+
 // Get all expenses
-router.get('/', async (req, res) => {
+router.get('/', authenticateToken,  async (req, res) => {
   try {
     const expenses = ExpenseService.getExpenses();
     res.json(expenses);
@@ -15,7 +29,7 @@ router.get('/', async (req, res) => {
 });
 
 // Get all expenses for a specific user by userId
-router.get('/:userId', async (req, res) => {
+router.get('/:userId', authenticateToken, async (req, res) => {
   try {
     // Fetch expenses filtered by userId
     const expenses = await Expense.find({ user: req.params.userId })
@@ -35,7 +49,7 @@ router.get('/:userId', async (req, res) => {
 
 
 // Get a single expense by ID
-router.get('/:id', async (req, res) => {
+router.get('/:id', authenticateToken, async (req, res) => {
   try {
     const expense = new ExpenseService(req.params.id);
     const results = expense.getExpense()
@@ -47,7 +61,7 @@ router.get('/:id', async (req, res) => {
 });
 
 // Create a new expense
-router.post('/', async (req, res) => {
+router.post('/', authenticateToken, async (req, res) => {
   try {
     const newExpense = await  ExpenseService.createExpense(req.body);
     res.status(201).json(newExpense);
@@ -57,7 +71,7 @@ router.post('/', async (req, res) => {
 });
 
 // Update expense by ID (e.g., change status)
-router.put('/:id', async (req, res) => {
+router.put('/:id', authenticateToken, async (req, res) => {
   try {
     const expense = new ExpenseService(req.params.id);
     const updatedExpense = expense.updateExpense(req.body);
@@ -71,7 +85,7 @@ router.put('/:id', async (req, res) => {
 });
 
 // Delete expense by ID
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', authenticateToken, async (req, res) => {
   try {
     const expense = new ExpenseService(req.params.id);
     const deletedExpense = await expense.deleteExpense();

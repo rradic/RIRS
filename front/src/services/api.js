@@ -4,10 +4,26 @@ const token = localStorage.getItem("token");
 const api = axios.create({
   baseURL: "/api",
   headers: {
-    "Content-Type": "application/json",
-    "authorization": `Bearer ${token}` 
+    "Content-Type": "application/json"
   },
 });
+
+api.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      console.warn("Token not found in localStorage.");
+    } else {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+
+    return config;
+  },
+  (error) => {
+    console.error("Error in request interceptor:", error);
+    return Promise.reject(error);
+  }
+);
 
 const apiCsv = axios.create({
   baseURL: '/api',

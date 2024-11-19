@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import AdminDashboard from "./pages/adminDashboard";
@@ -13,7 +12,6 @@ function App() {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    console.log("tokeen",token)
 
     if (token) {
       try {
@@ -31,7 +29,7 @@ function App() {
         console.error("Error decoding token:", error);
         setUser(null);
       }
-    }else {
+    } else {
       console.log("No token found, user not authenticated");
       setUser(null); // If no token, clear user state
     }
@@ -40,18 +38,41 @@ function App() {
   useEffect(() => {
     console.log("User state updated:", user); // This will log whenever user changes
   }, [user]); // This hook will run every time user state changes
-  
 
+  const loginChange = () => {
+    const storedUser = localStorage.getItem("user");
+    console.log("stored user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    } else {
+      setUser(null);
+    }
+  };
 
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<LoginForm />} />
-        <Route path="/login" element={<LoginForm />} />
-        <Route path="/manager" element={<ManagerDashboardLayout />} />
-        <Route path="/dashboard" element={<AdminDashboard />} />
-        <Route path="/employee" element={<EmployeeExpensePage />} />
-       
+        <Route path="/" element={<LoginForm loginChange={loginChange} />} />
+        {user && user.role === "manager" && (
+          <Route path="/manager" element={<ManagerDashboardLayout />} />
+        )}
+        <Route path="/login" element={<LoginForm loginChange={loginChange} />} />
+        {user && user.role === "admin" && (
+          <Route path="/dashboard" element={<AdminDashboard />} />
+        )}
+        {user && user.role === "employee" && (
+          <Route path="/employee" element={<EmployeeExpensePage />} />
+        )}
+        {/* Catch unmatched routes */}
+        <Route
+          path="*"
+          element={
+            <div style={{ textAlign: "center", marginTop: "50px" }}>
+              <h1>Unauthorized</h1>
+              <p>You are not authorized to access this page</p>
+            </div>
+          }
+        />
       </Routes>
     </Router>
   );

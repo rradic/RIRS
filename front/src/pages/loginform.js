@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
-const LoginForm = () => {
+const LoginForm = ({loginChange}) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -47,6 +47,7 @@ const LoginForm = () => {
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("user", JSON.stringify(user));
       setUser(user);
+      loginChange();
       if (user.role === "admin") {
         navigate("/dashboard");
       } else if (user.role === "employee") {
@@ -59,6 +60,7 @@ const LoginForm = () => {
 
       alert("Login successful");
     } catch (err) {
+      console.log(err.message);
       setError("Invalid email or password");
     }
   };
