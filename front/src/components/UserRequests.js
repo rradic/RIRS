@@ -2,25 +2,17 @@ import {Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, T
 import {fetchUsersRequests, approveRequest, declineRequest} from "../services/api";
 import {useEffect, useState} from "react";
 
-const approveRequestApi = async (id) => {
-    await approveRequest(id)
-}
 
-const declineRequestApi = async (id) => {
-    await declineRequest(id)
-}
 
-const UserRequests = () => {
+const UserRequests = ({usersRequests}) => {
 
-    const [usersRequests, setUsersRequests] = useState([]);
+    async function approveRequestApi (id)  {
+        await approveRequest(id)
+    }
 
-    useEffect(() => {
-        fetchUsersRequests().then((response) => {
-            setUsersRequests(response)
-        });
-    }, []);
-    console.log(usersRequests)
-
+    async function declineRequestApi(id) {
+        await declineRequest(id)
+    }
 
     return (
         <TableContainer component={Paper}>
@@ -36,7 +28,6 @@ const UserRequests = () => {
                             key={row}
                             sx={{'&:last-child td, &:last-child th': {border: 0}}}
                         >
-                            {console.log(row)}
                             <TableCell component="th" scope="row">
                                 {row.user.name}
                             </TableCell>
@@ -50,8 +41,8 @@ const UserRequests = () => {
                                 {row.description}
                             </TableCell>
                             <TableCell component="th" scope="row">
-                                <Button onClick={approveRequestApi(row._id)}>Approve</Button>
-                                <Button onClick={declineRequestApi(row._id)}>Decline</Button>
+                                <Button type="submit" onClick={() => approveRequestApi(row._id)}>Approve</Button>
+                                <Button type="submit" onClick={() => declineRequestApi(row._id)}>Decline</Button>
                             </TableCell>
                         </TableRow>
                     ))}

@@ -1,26 +1,22 @@
 import {useEffect, useState} from "react";
-import {approveRequest, declineRequest, fetchGroupsRequests, fetchUsersRequests} from "../services/api";
+import {approveRequest, declineRequest, fetchGroupsRequests} from "../services/api";
 import {Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 
-
-const approveRequestApi = async (id) => {
-    await approveRequest(id)
-}
-
-const declineRequestApi = async (id) => {
-    await declineRequest(id)
-}
-
 const GroupRequests = () => {
-    const [usersRequests, setUsersRequests] = useState([]);
+    const [groupRequests, setGroupRequests] = useState([]);
 
     useEffect(() => {
         fetchGroupsRequests().then((response) => {
-            setUsersRequests(response)
+            setGroupRequests(response)
         });
     }, []);
-    console.log(usersRequests)
+    const approveRequestApi = async (id) => {
+        await approveRequest(id)
+    }
 
+    const declineRequestApi = async (id) => {
+        await declineRequest(id)
+    }
 
     return (
         <TableContainer component={Paper}>
@@ -31,16 +27,7 @@ const GroupRequests = () => {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {usersRequests.length === 0 ? () =>
-                        (
-                            <TableRow>
-                                <TableCell component="th" scope="row">
-                                    No requests
-                                </TableCell>
-                            </TableRow>
-                        ) : null
-                    }
-                    {usersRequests.map((row) => (
+                    {groupRequests.map((row) => (
                         <TableRow
                             key={row}
                             sx={{'&:last-child td, &:last-child th': {border: 0}}}
@@ -58,8 +45,8 @@ const GroupRequests = () => {
                                 {row.description}
                             </TableCell>
                             <TableCell component="th" scope="row">
-                                <Button onClick={approveRequestApi(row._id)}>Approve</Button>
-                                <Button onClick={declineRequestApi(row._id)}>Decline</Button>
+                                <Button onClick={() => approveRequestApi(row._id)}>Approve</Button>
+                                <Button onClick={() => declineRequestApi(row._id)}>Decline</Button>
                             </TableCell>
                         </TableRow>
                     ))}

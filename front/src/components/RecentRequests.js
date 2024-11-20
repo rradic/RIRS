@@ -14,7 +14,6 @@ const RecentRequests = () => {
             setUsersRequests(response)
         });
     }, []);
-    console.log(usersRequests)
 
 
     return (
@@ -22,10 +21,10 @@ const RecentRequests = () => {
             <Table sx={{minWidth: 650}} aria-label="simple table">
                 <TableHead>
                     <TableRow>
-                        <TableCell>Recent request</TableCell>
-                        <TableCell>
-                            <Button onClick={fetchRecentRequestsCsvApi}>Export csv</Button>
-                        </TableCell>
+                    <TableCell>Recent request</TableCell>
+                    <TableCell>
+                        <Button onClick={fetchRecentRequestsCsvApi}>Export csv</Button>
+                    </TableCell>
                     </TableRow>
                     <TableRow>
                         <TableCell>User</TableCell>
@@ -61,11 +60,6 @@ const RecentRequests = () => {
                             <TableCell component="th" scope="row">
                                 {new Date(row.date).toLocaleDateString('sl-SL')}
                             </TableCell>
-                            {/*<Button onclick={approveRequest()}></Button>*/}
-                            {/*<TableCell align="right">{row.calories}</TableCell>*/}
-                            {/*<TableCell align="right">{row.fat}</TableCell>*/}
-                            {/*<TableCell align="right">{row.carbs}</TableCell>*/}
-                            {/*<TableCell align="right">{row.protein}</TableCell>*/}
                         </TableRow>
                     ))}
                 </TableBody>
