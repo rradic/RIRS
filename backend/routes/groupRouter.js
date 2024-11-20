@@ -1,11 +1,24 @@
 const express = require('express');
 const Group = require('../schemas/group');
 const GroupService = require('../services/groupService');
+const jwt = require("jsonwebtoken");
+const JWT_SECRET = "Vkm123vkm$$$";
 
 const router = express.Router();
 
+const authenticateToken = (req, res, next) => {
+  const token = req.headers["authorization"]?.split(" ")[1];
+  if (!token) return res.status(401).json({ message: "Access token required" });
+
+  jwt.verify(token, JWT_SECRET, (err, user) => {
+    if (err) return res.status(403).json({ message: "Invalid token" });
+    req.user = user;
+    next();      
+  });
+};
+
 // Get all groups
-router.get('/', async (req, res) => {
+router.get('/', authenticateToken,  async (req, res) => {
   try {
     const groups = await GroupService.getGroups();
     res.json(groups);
@@ -15,7 +28,7 @@ router.get('/', async (req, res) => {
 });
 
 // Get a single group by ID
-router.get('/:id', async (req, res) => {
+router.get('/:id', authenticateToken, async (req, res) => {
   try {
     const group = (new GroupService(req.params.id)).getGroup();
     if (!group) return res.status(404).json({ message: 'Group not found' });
@@ -26,7 +39,7 @@ router.get('/:id', async (req, res) => {
 });
 
 // Create a new group
-router.post('/', async (req, res) => {
+router.post('/', authenticateToken, async (req, res) => {
   try {
     const group = GroupService.createGroup(req.body);
     res.status(201).json(group);
@@ -36,7 +49,7 @@ router.post('/', async (req, res) => {
 });
 
 // Update group by ID
-router.put('/:id', async (req, res) => {
+router.put('/:id', authenticateToken, async (req, res) => {
   try {
     const updatedGroup = (new GroupService(req.params.id)).updateGroup(req.body);
     if (!updatedGroup)
@@ -48,7 +61,7 @@ router.put('/:id', async (req, res) => {
 });
 
 // Delete group by ID
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', authenticateToken, async (req, res) => {
   try {
     const deletedGroup = new GroupService(req.params.id);
     await deletedGroup.deleteGroup()

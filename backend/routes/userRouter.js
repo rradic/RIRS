@@ -7,8 +7,19 @@ const jwt = require("jsonwebtoken");
 
 const JWT_SECRET = "Vkm123vkm$$$";
 
+const authenticateToken = (req, res, next) => {
+  const token = req.headers["authorization"]?.split(" ")[1];
+  if (!token) return res.status(401).json({ message: "Access token required" });
+
+  jwt.verify(token, JWT_SECRET, (err, user) => {
+    if (err) return res.status(403).json({ message: "Invalid token" });
+    req.user = user;
+    next();      
+  });
+};
+
 // Get all users
-router.get("/", async (req, res) => {
+router.get("/", authenticateToken, async (req, res) => {
   try {
     const users = await User.find();
     res.json(users);
@@ -18,7 +29,7 @@ router.get("/", async (req, res) => {
 });
 
 // Get a single user by ID
-router.get("/:id", async (req, res) => {
+router.get("/:id", authenticateToken, async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
     if (!user) return res.status(404).json({ message: "User not found" });
@@ -29,7 +40,7 @@ router.get("/:id", async (req, res) => {
 });
 
 // Create a new user
-router.post("/", async (req, res) => {
+router.post("/", authenticateToken, async (req, res) => {
   const { name, role } = req.body;
 
   // Generate email based on name
@@ -73,8 +84,10 @@ router.post("/login", async (req, res) => {
       return res.status(401).json({ message: "Invalid credentials" });
 
     const token = jwt.sign({ userId: user._id, role: user.role }, JWT_SECRET, {
-      expiresIn: "1h",
+      expiresIn: "6h",
     });
+    console.log("Login successful for:", user.email);
+
     res.json({
       token,
       user: { name: user.name, email: user.email, role: user.role },
@@ -85,16 +98,7 @@ router.post("/login", async (req, res) => {
 });
 
 // JWT authentication middleware for protected routes
-const authenticateToken = (req, res, next) => {
-  const token = req.headers["authorization"]?.split(" ")[1];
-  if (!token) return res.status(401).json({ message: "Access token required" });
 
-  jwt.verify(token, JWT_SECRET, (err, user) => {
-    if (err) return res.status(403).json({ message: "Invalid token" });
-    req.user = user;
-    next();
-  });
-};
 
 // Example of a protected route using JWT authentication
 router.get("/protected", authenticateToken, (req, res) => {
@@ -102,7 +106,7 @@ router.get("/protected", authenticateToken, (req, res) => {
 });
 
 // Update user by ID
-router.put("/:id", async (req, res) => {
+router.put("/:id", authenticateToken, async (req, res) => {
   try {
     const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
@@ -116,7 +120,7 @@ router.put("/:id", async (req, res) => {
 });
 
 // Delete user by ID
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", authenticateToken, async (req, res) => {
   try {
     const deletedUser = await User.findByIdAndDelete(req.params.id);
     if (!deletedUser)
@@ -126,6 +130,5 @@ router.delete("/:id", async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
-
 
 module.exports = router;
