@@ -23,16 +23,17 @@ const Navbar = ({ user }) => {
   };
 
   useEffect(() => {
-    setUserData(user);
-  });
+    const userLocal = localStorage.getItem('user');
+    setUserData(userLocal);
+  }, [userData.name]);
   return (
     <AppBar position='static' sx={{ backgroundColor: '#2751a1' }}>
       <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
-        <Avatar sx={{ bgcolor: '#d9c67e', mr: 1 }}>
+        {/* <Avatar sx={{ bgcolor: '#d9c67e', mr: 1 }}>
           {userData.name ? userData.name.charAt(0) : <AccountCircle />}
-        </Avatar>
+        </Avatar> */}
         <Typography variant='h6' sx={{ flexGrow: 1, color: '#d9c67e' }}>
-          <Typography
+          {/* <Typography
             variant='subtitle1'
             sx={{
               color: '#FFFFFF',
@@ -40,8 +41,8 @@ const Navbar = ({ user }) => {
               display: { xs: 'block', sm: 'block' },
             }}
           >
-            {userData.name} {userData.surname}
-          </Typography>
+            {userData.name}
+          </Typography> */}
         </Typography>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <Button color='inherit' onClick={handleLogout}>
