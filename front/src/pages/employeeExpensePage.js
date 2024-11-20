@@ -80,7 +80,7 @@ const EmployeeExpensePage = () => {
     const loadGroups = async () => {
       try {
         const fetchedGroups = await getGroups();
-        setGroups(fetchedGroups);
+        setGroups(fetchedGroups); 
       } catch (error) {
         console.error("Error fetching groups:", error);
       }
@@ -101,7 +101,7 @@ const EmployeeExpensePage = () => {
       description,
       amount: parseFloat(amount),
       date,
-      group: isGroupExpense ? "group_id_placeholder" : null,
+      group: isGroupExpense ?  selectedGroup : null,
       status: "pending",
     };
 
