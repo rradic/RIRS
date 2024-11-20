@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import {
   TextField,
   Button,
@@ -7,97 +7,95 @@ import {
   Container,
   Alert,
   Box,
-} from "@mui/material";
-import { useNavigate } from "react-router-dom";
+} from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
-const LoginForm = ({loginChange}) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [token, setToken] = useState("");
-  const [user, setUser] = useState("");
+const LoginForm = ({ loginChange }) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [token, setToken] = useState('');
+  const [user, setUser] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
     if (token) {
-      if (user.role === "admin") {
-        navigate("/dashboard");
-      } else if (user.role === "employee") {
-        navigate("/employee");
-      } else if (user.role === "manager") {
-        navigate("/manager");
+      if (user.role === 'admin') {
+        navigate('/dashboard');
+      } else if (user.role === 'employee') {
+        navigate('/employee');
+      } else if (user.role === 'manager') {
+        navigate('/manager');
       } else {
-        navigate("/");
+        navigate('/');
       }
     }
   }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
+    setError('');
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/users/login",
+        'http://localhost:3000/api/users/login',
         { email, password }
       );
       setToken(response.data.token);
       const { user } = response.data;
-      localStorage.setItem("token", response.data.token);
-      localStorage.setItem("user", JSON.stringify(user));
+      localStorage.setItem('token', response.data.token);
+      localStorage.setItem('user', JSON.stringify(user));
       setUser(user);
       loginChange();
-      if (user.role === "admin") {
-        navigate("/dashboard");
-      } else if (user.role === "employee") {
-        navigate("/employee");
-      } else if (user.role === "manager") {
-        navigate("/manager");
+      if (user.role === 'admin') {
+        navigate('/dashboard');
+      } else if (user.role === 'employee') {
+        navigate('/employee');
+      } else if (user.role === 'manager') {
+        navigate('/manager');
       } else {
-        navigate("/");
+        navigate('/');
       }
-
-      alert("Login successful");
     } catch (err) {
       console.log(err.message);
-      setError("Invalid email or password");
+      setError('Invalid email or password');
     }
   };
 
   return (
-    <Container maxWidth="xs">
+    <Container maxWidth='xs'>
       <Box mt={8}>
-        <Typography variant="h4" component="h1" gutterBottom>
+        <Typography variant='h4' component='h1' gutterBottom>
           Login
         </Typography>
-        {error && <Alert severity="error">{error}</Alert>}
+        {error && <Alert severity='error'>{error}</Alert>}
         <form onSubmit={handleSubmit}>
           <TextField
-            label="Email"
-            variant="outlined"
+            label='Email'
+            variant='outlined'
             fullWidth
-            margin="normal"
+            margin='normal'
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
           />
           <TextField
-            label="Password"
-            type="password"
-            variant="outlined"
+            label='Password'
+            type='password'
+            variant='outlined'
             fullWidth
-            margin="normal"
+            margin='normal'
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
           <Button
-            type="submit"
+            type='submit'
             fullWidth
-            variant="contained"
-            color="primary"
-            style={{ marginTop: "16px" }}
+            variant='contained'
+            color='primary'
+            style={{ marginTop: '16px' }}
           >
             Login
           </Button>
