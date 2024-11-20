@@ -28,11 +28,27 @@ api.interceptors.request.use(
 const apiCsv = axios.create({
   baseURL: '/api',
   headers: {
-    'Accept': 'text/csv',
-    'Content-Type': 'text/csv',
+    'Accept': 'text/octet-stream',
+    'Content-Type': 'text/octet-stream',
     "Content-Disposition": "attachment;filename=expenses.csv",
   },
 });
+apiCsv.interceptors.request.use(
+    (config) => {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        console.warn("Token not found in localStorage.");
+      } else {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+
+      return config;
+    },
+    (error) => {
+      console.error("Error in request interceptor:", error);
+      return Promise.reject(error);
+    }
+);
 
 export const getAllUsers = async () => {
   try {
@@ -294,9 +310,9 @@ export const fetchRecentRequests = async () => {
     }
 };
 
-export const handleDownloadCsv = () => {
+export const handleDownloadCsv = async () => {
   const tempLink = document.createElement('a')
-  tempLink.href = 'http://localhost:3000/api/manager/requests/recentCsv'
+  tempLink.href = 'http://localhost:3000/api/manager/requests/recentCsv/' + token +'/'
   tempLink.click()
 }
 
@@ -369,3 +385,25 @@ export const fetchEmployees = async () => {
     return null; // Or any default value you want to return
   }
 };
+
+export const updateEmployeeBudget = async (id, budget) => {
+    try {
+        const response = await api.put(`/users/${id}`, { budget: budget });
+        return response.data;
+    } catch (error) {
+        console.error('Error updating employee budget', error);
+
+        // Check for 401 or 403 error and handle authorization failure
+        if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+        // Clear the token from local storage
+        localStorage.removeItem('token');
+
+        // Redirect to the login page
+        window.location.href = '/login';
+        return;
+        }
+
+        // Optionally, you can return a default response or null to handle this failure gracefully
+        return null; // Or any default value you want to return
+    }
+}

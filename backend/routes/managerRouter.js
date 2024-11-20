@@ -22,6 +22,21 @@ const authMiddleware = async (req, res, next) => {
         }
     });
 }
+
+const authMiddlewareWithTokenInUri = async (req, res, next) => {
+    const token = req.params.token;
+    if (!token) return res.status(401).json({ message: "Access token required" });
+
+    jwt.verify(token, JWT_SECRET, (err, user) => {
+        if (err) return res.status(403).json({ message: "Invalid token" });
+        req.user = user;
+        if (user.role !== 'manager') {
+            return res.status(403).json({ message: "Only manager can access this resource" });
+        } else {
+            next();
+        }
+    });
+}
 router.get('/', authMiddleware ,async (req, res) => {
     try {
         const employees = await UserService.fetchEmployeesWithExpenses();
@@ -33,7 +48,7 @@ router.get('/', authMiddleware ,async (req, res) => {
 
 router.get('/requests/users', authMiddleware, async (req, res) => {
     try {
-        const requests = await ExpenseService.getExpenses({status: 'pending', user: { $eq: null}});
+        const requests = await ExpenseService.getExpenses({status: 'pending', group: { $eq: null}});
         res.json(requests);
     } catch (err) {
         res.status(500).json({ message: err.message });
@@ -43,7 +58,7 @@ router.get('/requests/users', authMiddleware, async (req, res) => {
 router.get('/requests/group', authMiddleware, async (req, res) => {
     try {
         const requests = await ExpenseService.getExpenses(
-            {status: 'pending', user: { $ne: null}});
+            {status: 'pending', group: { $ne: null}});
         res.json(requests);
     } catch (err) {
         res.status(500).json({ message: err.message });
@@ -61,7 +76,7 @@ router.get('/requests/recent', authMiddleware, async (req, res) => {
     }
 });
 
-router.get('/requests/recentCsv', authMiddleware, async (req, res) => {
+router.get('/requests/recentCsv/:token/', authMiddlewareWithTokenInUri, async (req, res) => {
     try {
         const results = await ExpenseService.getExpenses(
             {status: {$ne: 'pending'}
