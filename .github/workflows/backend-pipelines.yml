@@ -10,49 +10,49 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
-
-    runs-on: ubuntu-latest
-
-    #    strategy:
-    #      matrix:
-    #        node-version: [20.13.1]
-    #        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-
-    steps:
-      - name: checkout
-        uses: actions/checkout@v3
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: 20.13.1
-
-      - name: Cache node_modules
-        uses: actions/cache@v3
-        with:
-          path: RIRS/front/node_modules
-          key: ${{ runner.os }}-frontend-${{ hashFiles('RIRS/front/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-frontend-
-
-      - name: Install dependencies
-        run: |
-          cd RIRS/front/
-          npm ci
-
-      - name: Build application
-        run: |
-          cd RIRS/front/
-          npm run build
-
-      - name: Upload build artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: frontend-build
-          path: RIRS/front/build/
+#  build:
+#
+#    runs-on: ubuntu-latest
+#
+#    #    strategy:
+#    #      matrix:
+#    #        node-version: [20.13.1]
+#    #        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+#
+#    steps:
+#      - name: checkout
+#        uses: actions/checkout@v3
+#      - name: Use Node.js ${{ matrix.node-version }}
+#        uses: actions/setup-node@v3
+#        with:
+#          node-version: 20.13.1
+#
+#      - name: Cache node_modules
+#        uses: actions/cache@v3
+#        with:
+#          path: RIRS/front/node_modules
+#          key: ${{ runner.os }}-frontend-${{ hashFiles('RIRS/front/package-lock.json') }}
+#          restore-keys: |
+#            ${{ runner.os }}-frontend-
+#
+#      - name: Install dependencies
+#        run: |
+#          cd RIRS/front/
+#          npm ci
+#
+#      - name: Build application
+#        run: |
+#          cd RIRS/front/
+#          npm run build
+#
+#      - name: Upload build artifacts
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: frontend-build
+#          path: RIRS/front/build/
 
   test:
-    needs: build
+#    needs: build
     runs-on: ubuntu-latest
 
     steps:
@@ -64,16 +64,17 @@ jobs:
         with:
           node-version: 20.13.1
 
-      - name: Cache node_modules
-        uses: actions/cache@v3
-        with:
-          path: RIRS/front/node_modules
-          key: ${{ runner.os }}-frontend-${{ hashFiles('RIRS/front/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-frontend-
+#      - name: Cache node_modules
+#        uses: actions/cache@v3
+#        with:
+#          path: RIRS/front/node_modules
+#          key: ${{ runner.os }}-frontend-${{ hashFiles('RIRS/front/package-lock.json') }}
+#          restore-keys: |
+#            ${{ runner.os }}-frontend-
 
       - name: Install dependencies
         run: |
+          ls
           cd RIRS/front/
           npm install
         # ⚠️ KAKO PREPOZNATI, DA JE CACHE USPEŠEN?
