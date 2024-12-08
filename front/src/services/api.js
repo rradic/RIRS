@@ -20,7 +20,7 @@ api.interceptors.request.use(
     return config;
   },
   (error) => {
-    console.error("Error in request interceptor:", error);
+    console.log("Error in request interceptor:", error);
     return Promise.reject(error);
   }
 );
@@ -45,7 +45,7 @@ apiCsv.interceptors.request.use(
       return config;
     },
     (error) => {
-      console.error("Error in request interceptor:", error);
+      console.log("Error in request interceptor:", error);
       return Promise.reject(error);
     }
 );
@@ -56,7 +56,7 @@ export const getAllUsers = async () => {
     return response.data;
   } catch (error) {
     if (process.env.NODE_ENV !== 'test') {
-      console.error('Error fetching employees', error);
+      console.log('Error fetching employees', error);
     }
 
     // Check for 401 or 403 error and handle authorization failure
@@ -79,7 +79,7 @@ export const getUserById = async (userId) => {
     const response = await api.get(`/users/${userId}`);
     return response.data;
   } catch (error) {
-    console.error('Error fetching employees', error);
+    console.log('Error fetching employees', error);
 
     // Check for 401 or 403 error and handle authorization failure
     if (error.response && (error.response.status === 401 || error.response.status === 403)) {
@@ -106,7 +106,7 @@ export const getGroups = async () => {
     const response = await api.get(`/groups`);
     return response.data;
   } catch (error) {
-    console.error('Error fetching employees', error);
+    console.log('Error fetching employees', error);
 
     // Check for 401 or 403 error and handle authorization failure
     if (error.response && (error.response.status === 401 || error.response.status === 403)) {
@@ -138,7 +138,7 @@ export const fetchUserCounts = async () => {
 
     return { employeesCount, managersCount };
   } catch (error) {
-    console.error('Error fetching employees', error);
+    console.log('Error fetching employees', error);
 
     // Check for 401 or 403 error and handle authorization failure
     if (error.response && (error.response.status === 401 || error.response.status === 403)) {
@@ -160,7 +160,7 @@ export const addUser = async (userData) => {
     const response = await api.post("/users", userData);
     return response.data;
   } catch (error) {
-    console.error('Error fetching employees', error);
+    console.log('Error fetching employees', error);
 
     // Check for 401 or 403 error and handle authorization failure
     if (error.response && (error.response.status === 401 || error.response.status === 403)) {
@@ -185,7 +185,7 @@ export const fetchGroupCount = async () => {
 
     return groupsCount;
   } catch (error) {
-    console.error('Error fetching employees', error);
+    console.log('Error fetching employees', error);
 
     // Check for 401 or 403 error and handle authorization failure
     if (error.response && (error.response.status === 401 || error.response.status === 403)) {
@@ -206,7 +206,7 @@ export const addGroup = async (groupData) => {
     const response = await api.post("/groups", groupData);
     return response.data;
   } catch (error) {
-    console.error('Error fetching employees', error);
+    console.log('Error fetching employees', error);
 
     // Check for 401 or 403 error and handle authorization failure
     if (error.response && (error.response.status === 401 || error.response.status === 403)) {
@@ -229,7 +229,7 @@ export const requestExpense = async (expenseData) => {
     const response = await api.post("/expenses", expenseData);
     return response.data;
   } catch (error) {
-    console.error('Error fetching employees', error);
+    console.log('Error fetching employees', error);
 
     // Check for 401 or 403 error and handle authorization failure
     if (error.response && (error.response.status === 401 || error.response.status === 403)) {
@@ -251,7 +251,7 @@ export const fetchUsersRequests = async () => {
     const response = await api.get('/manager/requests/users');
     return response.data;
   } catch (error) {
-    console.error('Error fetching employees', error);
+    console.log('Error fetching employees', error);
 
     // Check for 401 or 403 error and handle authorization failure
     if (error.response && (error.response.status === 401 || error.response.status === 403)) {
@@ -273,7 +273,7 @@ export const fetchGroupsRequests = async () => {
     const response = await api.get('/manager/requests/group');
     return response.data;
   } catch (error) {
-    console.error('Error fetching employees', error);
+    console.log('Error fetching employees', error);
 
     // Check for 401 or 403 error and handle authorization failure
     if (error.response && (error.response.status === 401 || error.response.status === 403)) {
@@ -295,7 +295,7 @@ export const fetchRecentRequests = async () => {
     const response = await api.get('/manager/requests/recent');
     return response.data;
   } catch (error) {
-      console.error('Error fetching employees', error);
+      console.log('Error fetching employees', error);
   
       // Check for 401 or 403 error and handle authorization failure
       if (error.response && (error.response.status === 401 || error.response.status === 403)) {
@@ -325,7 +325,7 @@ export const approveRequest = async (id) => {
     );
     return response.data;
   } catch (error) {
-      console.error('Error fetching employees', error);
+      console.log('Error fetching employees', error);
   
       // Check for 401 or 403 error and handle authorization failure
       if (error.response && (error.response.status === 401 || error.response.status === 403)) {
@@ -349,7 +349,7 @@ export const declineRequest = async (id) => {
     );
     return response.data;
   } catch (error) {
-    console.error('Error fetching employees', error);
+    console.log('Error fetching employees', error);
 
     // Check for 401 or 403 error and handle authorization failure
     if (error.response && (error.response.status === 401 || error.response.status === 403)) {
@@ -393,7 +393,7 @@ export const updateEmployeeBudget = async (id, budget) => {
         const response = await api.put(`/users/${id}`, { budget: budget });
         return response.data;
     } catch (error) {
-        console.error('Error updating employee budget', error);
+        console.log('Error updating employee budget', error);
 
         // Check for 401 or 403 error and handle authorization failure
         if (error.response && (error.response.status === 401 || error.response.status === 403)) {
