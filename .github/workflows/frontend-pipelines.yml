@@ -76,6 +76,7 @@ jobs:
         run: |
           ls
           cd front/
+          ls
           npm install
         # ⚠️ KAKO PREPOZNATI, DA JE CACHE USPEŠEN?
         # - Če je cache hit, npm install ne namešča novih odvisnosti, ampak preveri obstoječe.
