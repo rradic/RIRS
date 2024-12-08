@@ -64,18 +64,18 @@ jobs:
         with:
           node-version: 20.13.1
 
-      - name: Cache node_modules
-        uses: actions/cache@v3
-        with:
-          path: RIRS/front/node_modules
-          key: ${{ runner.os }}-frontend-${{ hashFiles('RIRS/front/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-frontend-
+#      - name: Cache node_modules
+#        uses: actions/cache@v3
+#        with:
+#          path: front/node_modules
+#          key: ${{ runner.os }}-frontend-${{ hashFiles('RIRS/front/package-lock.json') }}
+#          restore-keys: |
+#            ${{ runner.os }}-frontend-
 
       - name: Install dependencies
         run: |
           ls
-          cd RIRS/front/
+          cd front/
           npm install
         # ⚠️ KAKO PREPOZNATI, DA JE CACHE USPEŠEN?
         # - Če je cache hit, npm install ne namešča novih odvisnosti, ampak preveri obstoječe.
@@ -83,11 +83,11 @@ jobs:
 
       - name: Run tests with coverage
         run: |
-          cd RIRS/front/
+          cd front/
           npm run test:ci
 
       - name: Upload coverage report
         uses: actions/upload-artifact@v4
         with:
           name: frontend-coverage
-          path: RIRS/front/coverage/
+          path: front/coverage/

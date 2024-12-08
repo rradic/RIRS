@@ -75,7 +75,7 @@ jobs:
       - name: Install dependencies
         run: |
           ls
-          cd RIRS/front/
+          cd backend/
           npm install
         # ⚠️ KAKO PREPOZNATI, DA JE CACHE USPEŠEN?
         # - Če je cache hit, npm install ne namešča novih odvisnosti, ampak preveri obstoječe.
@@ -83,11 +83,11 @@ jobs:
 
       - name: Run tests with coverage
         run: |
-          cd RIRS/front/
+          cd backend/
           npm run test:ci
 
       - name: Upload coverage report
         uses: actions/upload-artifact@v4
         with:
           name: frontend-coverage
-          path: RIRS/front/coverage/
+          path: backend/coverage/
