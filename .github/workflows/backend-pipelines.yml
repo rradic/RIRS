@@ -14,18 +14,79 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [18.x, 20.x, 22.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+    #    strategy:
+    #      matrix:
+    #        node-version: [20.13.1]
+    #        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v4
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - run: npm ci
-    - run: npm run build --if-present
-    - run: npm test
+      - name: checkout
+        uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20.13.1
+
+      - name: Cache node_modules
+        uses: actions/cache@v3
+        with:
+          path: RIRS/front/node_modules
+          key: ${{ runner.os }}-frontend-${{ hashFiles('RIRS/front/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-frontend-
+
+      - name: Install dependencies
+        run: |
+          cd RIRS/front/
+          npm ci
+
+      - name: Build application
+        run: |
+          cd RIRS/front/
+          npm run build
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-build
+          path: RIRS/front/build/
+
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+        node-version: 20.13.1
+
+      - name: Cache node_modules
+        uses: actions/cache@v3
+        with:
+          path: RIRS/front/node_modules
+          key: ${{ runner.os }}-frontend-${{ hashFiles('RIRS/front/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-frontend-
+
+      - name: Install dependencies
+        run: |
+          cd RIRS/front/
+          npm install
+        # ⚠️ KAKO PREPOZNATI, DA JE CACHE USPEŠEN?
+        # - Če je cache hit, npm install ne namešča novih odvisnosti, ampak preveri obstoječe.
+        # - Če je cache miss, npm install ponovno ustvari mapo node_modules.
+
+      - name: Run tests with coverage
+        run: |
+          cd RIRS/front/
+          npm run test:ci
+
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-coverage
+          path: RIRS/front/coverage/
