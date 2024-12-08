@@ -55,7 +55,7 @@ export const getAllUsers = async () => {
     const response = await api.get("/users");
     return response.data;
   } catch (error) {
-    console.error('Error fetching employees', error);
+    console.log('Error fetching employees', error);
 
     // Check for 401 or 403 error and handle authorization failure
     if (error.response && (error.response.status === 401 || error.response.status === 403)) {
