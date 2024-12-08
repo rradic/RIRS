@@ -82,6 +82,11 @@ jobs:
         # - Če je cache hit, npm install ne namešča novih odvisnosti, ampak preveri obstoječe.
         # - Če je cache miss, npm install ponovno ustvari mapo node_modules.
 
+      - name: Install dependencies
+        run: |
+            cd pc-components
+            npm ci
+
       - name: Run tests with coverage
         run: |
           cd front/
