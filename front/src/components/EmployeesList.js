@@ -49,7 +49,7 @@ export default function EmployeesList() {
 
     const handleSave = async () => {
         if (selectedEmployee) {
-            await updateEmployeeBudget(selectedEmployee._id, budget);
+            await updateEmployeeBudget(selectedEmployee._id, parseInt(budget));
             setEmployees(employees.map(emp => emp._id === selectedEmployee._id ? { ...emp, budget } : emp));
             handleClose();
         }

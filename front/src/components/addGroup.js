@@ -15,7 +15,7 @@ const AddGroup = ({ users, onGroupAdded }) => {
 
   const handleCreateGroup = async () => {
     if (!groupName || selectedUsers.length === 0) {
-      alert('Group name and members are required');
+      window.alert('Group name and members are required');
       return;
     }
     try {

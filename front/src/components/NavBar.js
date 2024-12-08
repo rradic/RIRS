@@ -9,7 +9,6 @@ import {
   IconButton,
 } from '@mui/material';
 import { AccountCircle } from '@mui/icons-material';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 const Navbar = ({ user }) => {
@@ -25,7 +24,7 @@ const Navbar = ({ user }) => {
   useEffect(() => {
     const userLocal = localStorage.getItem('user');
     setUserData(userLocal);
-  }, [userData.name]);
+  }, [userData?.name]);
   return (
     <AppBar position='static' sx={{ backgroundColor: '#2751a1' }}>
       <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
