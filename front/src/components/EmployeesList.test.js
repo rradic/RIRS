@@ -11,8 +11,8 @@ const mockEmployees = [
 ];
 
 describe('EmployeesList', () => {
-    beforeEach(() => {
-        fetchEmployees.mockResolvedValue(mockEmployees);
+    beforeEach(async () => {
+        await fetchEmployees.mockResolvedValue(mockEmployees);
     });
 
     test('Prikazi ustrezno ime priimek in email', async () => {
@@ -37,7 +37,7 @@ describe('EmployeesList', () => {
     });
 
     test('Posodobi budzet ko se shrane posodobitve', async () => {
-        updateEmployeeBudget.mockResolvedValue({});
+        await updateEmployeeBudget.mockResolvedValue({});
         render(<EmployeesList />);
         await waitFor(() => screen.getByText('John Doe'));
         fireEvent.click(screen.getByText('John Doe'));
