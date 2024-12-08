@@ -64,8 +64,8 @@ describe('EmployeesList', () => {
 
     test('Prikazi zaposlene ko se nalozi stran', async () => {
         render(<EmployeesList />);
-        await waitFor(() => {
-            expect(fetchEmployees).toHaveBeenCalledTimes(1);
+        await waitFor(async () => {
+            expect(await fetchEmployees).toHaveBeenCalledTimes(1);
             expect(screen.getByText('John Doe')).toBeInTheDocument();
             expect(screen.getByText('Jane Smith')).toBeInTheDocument();
         });
