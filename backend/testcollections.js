@@ -17,8 +17,8 @@ mongoose.connect(dbUrl, { useNewUrlParser: true, useUnifiedTopology: true })
                 name: 'John Doe', 
                 email: 'john@example.com', 
                 password: 'securepassword', 
-                role: 'ordinary',
-                budget: { total: 1000, utilized: 200 } 
+                role: 'employee',
+                budget: 5000
             });
     
             const user2 = await User.create({ 
@@ -26,7 +26,7 @@ mongoose.connect(dbUrl, { useNewUrlParser: true, useUnifiedTopology: true })
                 email: 'jane@example.com', 
                 password: 'securepassword', 
                 role: 'manager',
-                budget: { total: 5000, utilized: 800 }
+                budget: 5000
             });
     
             const group1 = await Group.create({ 

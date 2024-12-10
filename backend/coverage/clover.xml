@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1733869382369" clover="3.2.0">
+  <project timestamp="1733869382369" name="All files">
+    <metrics statements="41" coveredstatements="41" conditionals="3" coveredconditionals="3" methods="13" coveredmethods="13" elements="57" coveredelements="57" complexity="0" loc="41" ncloc="41" packages="2" files="4" classes="4"/>
+    <package name="schemas">
+      <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <file name="expense.js" path="C:\Users\PC\Desktop\RIRS\RIRS\backend\schemas\expense.js">
+        <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="12" count="1" type="stmt"/>
+      </file>
+      <file name="group.js" path="C:\Users\PC\Desktop\RIRS\RIRS\backend\schemas\group.js">
+        <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="11" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="services">
+      <metrics statements="35" coveredstatements="35" conditionals="3" coveredconditionals="3" methods="13" coveredmethods="13"/>
+      <file name="ExpensesService.js" path="C:\Users\PC\Desktop\RIRS\RIRS\backend\services\ExpensesService.js">
+        <metrics statements="27" coveredstatements="27" conditionals="3" coveredconditionals="3" methods="7" coveredmethods="7"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="7" count="3" type="stmt"/>
+        <line num="11" count="2" type="stmt"/>
+        <line num="15" count="1" type="stmt"/>
+        <line num="19" count="1" type="stmt"/>
+        <line num="23" count="1" type="stmt"/>
+        <line num="27" count="1" type="stmt"/>
+        <line num="31" count="1" type="stmt"/>
+        <line num="32" count="1" type="stmt"/>
+        <line num="33" count="1" type="stmt"/>
+        <line num="34" count="2" type="stmt"/>
+        <line num="35" count="2" type="stmt"/>
+        <line num="36" count="2" type="stmt"/>
+        <line num="37" count="2" type="stmt"/>
+        <line num="38" count="2" type="stmt"/>
+        <line num="39" count="2" type="stmt"/>
+        <line num="40" count="2" type="stmt"/>
+        <line num="41" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="42" count="1" type="stmt"/>
+        <line num="44" count="1" type="stmt"/>
+        <line num="46" count="2" type="stmt"/>
+        <line num="47" count="2" type="stmt"/>
+        <line num="48" count="2" type="stmt"/>
+        <line num="50" count="2" type="stmt"/>
+        <line num="52" count="1" type="stmt"/>
+        <line num="53" count="1" type="stmt"/>
+        <line num="57" count="1" type="stmt"/>
+      </file>
+      <file name="GroupService.js" path="C:\Users\PC\Desktop\RIRS\RIRS\backend\services\GroupService.js">
+        <metrics statements="8" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="6" coveredmethods="6"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="7" count="3" type="stmt"/>
+        <line num="11" count="1" type="stmt"/>
+        <line num="15" count="1" type="stmt"/>
+        <line num="19" count="1" type="stmt"/>
+        <line num="23" count="1" type="stmt"/>
+        <line num="27" count="1" type="stmt"/>
+        <line num="31" count="1" type="stmt"/>
+      </file>
+    </package>
+  </project>
+</coverage>
