@@ -75,16 +75,16 @@ describe('GroupService', () => {
                 description: 'Office Supplies',
                 status: 'Approved',
                 group: { name: 'Group 1' },
-                createdAt: new Date('2023-01-01'),
-                updatedAt: new Date('2023-01-02')
+                createdAt: new Date('2023-01-01').toISOString(),
+                updatedAt: new Date('2023-01-02').toISOString()
             },
             {
                 amount: 200,
                 description: 'Travel',
                 status: 'Pending',
                 group: { name: 'Group 1' },
-                createdAt: new Date('2023-01-03'),
-                updatedAt: new Date('2023-01-04')
+                createdAt: new Date('2023-01-03').toISOString(),
+                updatedAt: new Date('2023-01-04').toDateString()
             }
         ];
 
@@ -98,8 +98,8 @@ describe('GroupService', () => {
 
         expect(csv).toBe(
             'User,Amount,Description,Status,Group,Created At,Updated At\n' +
-            '100,Office Supplies,Approved,Group 1,Sun Jan 01 2023 01:00:00 GMT+0100 (Central European Standard Time),Mon Jan 02 2023 01:00:00 GMT+0100 (Central European Standard Time)\n' +
-            '200,Travel,Pending,Group 1,Tue Jan 03 2023 01:00:00 GMT+0100 (Central European Standard Time),Wed Jan 04 2023 01:00:00 GMT+0100 (Central European Standard Time)\n'
+            '100,Office Supplies,Approved,Group 1,2023-01-01T00:00:00.000Z,2023-01-02T00:00:00.000Z\n' +
+            '200,Travel,Pending,Group 1,2023-01-03T00:00:00.000Z,Wed Jan 04 2023\n'
         );
         expect(Expense.find).toHaveBeenCalledWith({ group: '1' });
     });

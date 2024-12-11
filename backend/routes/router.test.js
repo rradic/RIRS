@@ -2,8 +2,8 @@ const request = require('supertest');
 const express = require('express');
 const router = require('./groupRouter');
 const router2 = require('./userRouter');
-const GroupService = require('../services/GroupService');
-const UserService = require("../services/UserService");
+const GroupService = require('../../backend/services/GroupService.js');
+const UserService = require("../../backend/services/UserService.js");
 
 jest.mock('../services/GroupService');
 jest.mock('../services/UserService');
