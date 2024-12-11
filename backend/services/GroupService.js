@@ -1,4 +1,5 @@
 const Group = require("../schemas/group");
+const Expense = require("../schemas/expense");
 
 class GroupService {
     _id;
@@ -25,6 +26,20 @@ class GroupService {
 
     async deleteGroup() {
         return await Group.findByIdAndDelete(this._id).exec()
+    }
+
+    static async generateCsvForGroupExpenses(id) {
+        try {
+            let expenses = await Expense.find({ group: id }).populate('group').exec();
+            let csv = 'User,Amount,Description,Status,Group,Created At,Updated At\n';
+            for (let expense of expenses) {
+                csv += `${expense.amount},${expense.description},${expense.status},${expense.group ? expense.group.name : ''},${expense.createdAt},${expense.updatedAt}\n`;
+            }
+            return csv;
+        } catch (e) {
+            console.error('Error generating CSV for user expenses:', e);
+            throw e;
+        }
     }
 }
 

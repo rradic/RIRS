@@ -4,6 +4,8 @@ const router = express.Router();
 const crypto = require("crypto");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const UserService = require("../services/UserService");
+
 
 const JWT_SECRET = "Vkm123vkm$$$";
 
@@ -126,6 +128,18 @@ router.delete("/:id", authenticateToken, async (req, res) => {
     if (!deletedUser)
       return res.status(404).json({ message: "User not found" });
     res.json({ message: "User deleted" });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+// route for generating a csv for user expeneses
+router.get("/expenses/csv", async (req, res) => {
+  try {
+    const expenses = await UserService.generateCsvForUserExpenses(req.id);
+    res.setHeader("Content-Type", "text/csv");
+    res.setHeader("Content-Disposition", "attachment; filename=expenses.csv");
+    res.send(expenses);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

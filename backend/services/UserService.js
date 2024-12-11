@@ -42,6 +42,20 @@ class UserService {
             throw e;
         }
     }
+    // static async generateCsvForUserExpenses(userId) {
+    static async generateCsvForUserExpenses(id) {
+        try {
+            let expenses = await Expense.find({ user: id }).populate('user').exec();
+            let csv = 'User,Amount,Description,Status,Group,Created At,Updated At\n';
+            for (let expense of expenses) {
+                csv += `${expense.user.name},${expense.amount},${expense.description},${expense.status},${expense.group ? expense.group.name : ''},${expense.createdAt},${expense.updatedAt}\n`;
+            }
+            return csv;
+        } catch (e) {
+            console.error('Error generating CSV for user expenses:', e);
+            throw e;
+        }
+    }
 }
 
 module.exports = UserService;

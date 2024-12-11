@@ -73,4 +73,16 @@ router.delete('/:id', authenticateToken, async (req, res) => {
   }
 });
 
+// function for generating CSV for group expenses
+router.get('/expenses/csv', async (req, res) => {
+  try {
+    const csv = await GroupService.generateCsvForGroupExpenses(req.id);
+    res.setHeader('Content-Type', 'text/csv');
+    res.setHeader('Content-Disposition', 'attachment; filename=expenses.csv');
+    res.send(csv);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
 module.exports = router;
