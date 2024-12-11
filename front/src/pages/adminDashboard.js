@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Grid, Typography } from '@mui/material';
-import AddUser from '../components/addUser';
-import UserList from '../components/userlist';
-import StatsPanel from '../components/statsPanel';
-import AddGroup from '../components/addGroup';
+import AddUser from '../components/addUser.js';
+import UserList from '../components/userlist.js';
+import StatsPanel from '../components/statsPanel.js';
+import AddGroup from '../components/addGroup.js';
 
-import { getAllUsers, fetchUserCounts, fetchGroupCount } from '../services/api';
+import { getAllUsers, fetchUserCounts, fetchGroupCount } from '../services/api.js';
 
 const AdminDashboard = () => {
   const [employeesCount, setEmployeesCount] = useState(0);

@@ -7,7 +7,7 @@ import {
   Typography,
   Box,
 } from '@mui/material';
-import { addGroup } from '../services/api';
+import { addGroup } from '../services/api.js';
 
 const AddGroup = ({ users, onGroupAdded }) => {
   const [groupName, setGroupName] = useState('');

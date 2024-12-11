@@ -17,7 +17,7 @@ import {
 } from "@mui/material";
 
 import React, {useEffect, useState} from "react";
-import {fetchEmployees, updateEmployeeBudget} from "../services/api";
+import {fetchEmployees, updateEmployeeBudget} from "../services/api.js";
 
 export default function EmployeesList() {
 

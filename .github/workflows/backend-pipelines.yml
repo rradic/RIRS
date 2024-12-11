@@ -40,16 +40,11 @@ jobs:
           cd backend/
           npm ci
 
-      - name: Build application
-        run: |
-          cd backend/
-          npm run build
-
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
           name: backend-build
-          path: backend/build/
+          path: backend/node_modules/
 
   test:
     needs: build

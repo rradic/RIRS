@@ -5,11 +5,11 @@ import {
   Routes,
   useLocation,
 } from 'react-router-dom';
-import Navbar from './components/NavBar';
-import AdminDashboard from './pages/adminDashboard';
-import LoginForm from './pages/loginform';
-import EmployeeExpensePage from './pages/employeeExpensePage';
-import ManagerDashboardLayout from './layout/ManagerDashboardLayout';
+import Navbar from './components/NavBar.js';
+import AdminDashboard from './pages/adminDashboard.js';
+import LoginForm from './pages/loginform.js';
+import EmployeeExpensePage from './pages/employeeExpensePage.js';
+import ManagerDashboardLayout from './layout/ManagerDashboardLayout.js';
 import { jwtDecode } from 'jwt-decode';
 function ConditionalNavbar({ user }) {
   const location = useLocation(); // This is now safely within the Router context.

@@ -38,7 +38,7 @@ import {
   getUserById,
   requestExpense,
   getExpensesByUserId,
-} from "../services/api";
+} from "../services/api.js";
 
 const EmployeeExpensePage = () => {
   const [description, setDescription] = useState("");

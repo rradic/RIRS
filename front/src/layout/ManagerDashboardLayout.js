@@ -1,10 +1,10 @@
 import {Box, Container, Grid,  Tab, Tabs, Typography} from "@mui/material";
 import React, {useEffect, useState} from "react";
-import EmployeesList from "../components/EmployeesList";
-import UserRequests from "../components/UserRequests";
-import GroupRequests from "../components/GroupRequests";
-import RecentRequests from "../components/RecentRequests";
-import {fetchUsersRequests} from "../services/api";
+import EmployeesList from "../components/EmployeesList.js";
+import UserRequests from "../components/UserRequests.js";
+import GroupRequests from "../components/GroupRequests.js";
+import RecentRequests from "../components/RecentRequests.js";
+import {fetchUsersRequests} from "../services/api.js";
 
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;

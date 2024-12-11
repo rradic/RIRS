@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {approveRequest, declineRequest, fetchGroupsRequests} from "../services/api";
+import {approveRequest, declineRequest, fetchGroupsRequests} from "../services/api.js";
 import {Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 
 const GroupRequests = () => {

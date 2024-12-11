@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {fetchRecentRequests, handleDownloadCsv} from "../services/api";
+import {fetchRecentRequests, handleDownloadCsv} from "../services/api.js";
 import {Avatar, Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 
 const fetchRecentRequestsCsvApi = async () => {
