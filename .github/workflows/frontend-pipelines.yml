@@ -114,7 +114,7 @@ jobs:
       - name: Build Docker image
         run: |
           docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/frontend:dev front/
-          docker tag ${{ secrets.DOCKER_HUB_USERNAME }}/frontend:dev ${{ secrets.DOCKER_HUB_TOKEN }}/frontend:${{ github.sha }}
+          docker tag ${{ secrets.DOCKER_HUB_USERNAME }}/frontend:dev ${{ secrets.DOCKER_HUB_USERNAME }}/frontend:${{ github.sha }}
 
       - name: Push Docker image to Docker Hub
         run: |
