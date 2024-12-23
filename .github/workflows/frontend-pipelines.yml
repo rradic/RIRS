@@ -170,4 +170,4 @@ jobs:
       - name: Deploy to Firebase Hosting
         run: |
           cd front/
-          firebase deploy --only hosting --token ${{ secrets.FIREBASE_TOKEN }}
+          firebase deploy --only hosting --token ${{ secrets.FIREBASE_SERVICE_ACCOUNT_RIRS_39A5A }}
