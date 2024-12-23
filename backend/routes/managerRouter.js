@@ -90,4 +90,15 @@ router.get('/requests/recentCsv/:token/', authMiddlewareWithTokenInUri, async (r
     }
 });
 
+router.get("/managers/csv", authMiddleware, async (req, res) => {
+    try {
+        const csv = await UserService.generateCsvOfManagers();
+        res.setHeader("Content-Type", "text/csv");
+        res.setHeader("Content-Disposition", "attachment; filename=managers.csv");
+        res.send(csv);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
 module.exports = router;
