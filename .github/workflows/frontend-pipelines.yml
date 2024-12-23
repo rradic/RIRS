@@ -151,6 +151,8 @@ jobs:
   deploy-to-firebase:
     needs: test
     runs-on: ubuntu-latest
+    environment: Production
+    if: github.ref == 'refs/heads/production'
 
     steps:
       - name: Checkout code
