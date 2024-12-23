@@ -152,7 +152,7 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     environment: Production
-    if: github.ref == 'refs/heads/production'
+    if: github.ref == 'refs/heads/production' ||  github.ref == 'refs/heads/main'
 
     steps:
       - name: Checkout code
