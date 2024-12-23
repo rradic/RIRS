@@ -103,4 +103,40 @@ describe('GroupService', () => {
         );
         expect(Expense.find).toHaveBeenCalledWith({ group: '1' });
     });
+
+    describe('generateCsvOfManagers', () => {
+        it('should generate CSV for managers', async () => {
+            const mockManagers = [
+                {
+                    _id: new mongoose.Types.ObjectId(),
+                    name: 'Manager1',
+                    email: 'manager1@example.com',
+                    role: 'manager',
+                    budget: 1000,
+                    createdAt: new Date('2023-01-01T10:00:00Z'),
+                    updatedAt: new Date('2023-01-01T10:00:00Z')
+                },
+                {
+                    _id: new mongoose.Types.ObjectId(),
+                    name: 'Manager2',
+                    email: 'manager2@example.com',
+                    role: 'manager',
+                    budget: 2000,
+                    createdAt: new Date('2023-01-02T10:00:00Z'),
+                    updatedAt: new Date('2023-01-02T10:00:00Z')
+                }
+            ];
+
+            User.find.mockResolvedValue(mockManagers);
+
+            const csv = await UserService.generateCsvOfManagers();
+
+            const expectedCSV = 'ID,Name,Email,Role,Budget,Created At,Updated At\n' +
+                `${mockManagers[0]._id},${mockManagers[0].name},${mockManagers[0].email},${mockManagers[0].role},${mockManagers[0].budget},${mockManagers[0].createdAt},${mockManagers[0].updatedAt}\n` +
+                `${mockManagers[1]._id},${mockManagers[1].name},${mockManagers[1].email},${mockManagers[1].role},${mockManagers[1].budget},${mockManagers[1].createdAt},${mockManagers[1].updatedAt}\n`;
+
+            expect(csv).toBe(expectedCSV);
+            expect(User.find).toHaveBeenCalledWith({ role: 'manager' });
+        });
+    });
 });

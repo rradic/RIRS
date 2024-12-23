@@ -42,6 +42,21 @@ class UserService {
             throw e;
         }
     }
+    static async generateCsvOfManagers() {
+        try {
+            let managers = await User.find({role: 'manager'});
+            let csv = 'ID,Name,Email,Role,Budget,Created At,Updated At\n';
+            for (let manager of managers) {
+                csv += `${manager._id},${manager.name},${manager.email},${manager.role},${manager.budget},${manager.createdAt},${manager.updatedAt}\n`;
+            }
+            return csv;
+        } catch (e) {
+            console.error('Error generating CSV for managers:', e);
+            throw e;
+        }
+    }
+
+
     // static async generateCsvForUserExpenses(userId) {
     static async generateCsvForUserExpenses(id) {
         try {
