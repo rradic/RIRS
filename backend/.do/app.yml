@@ -1,0 +1,9 @@
+name: my-express-app
+services:
+  - name: web
+    run_command: node index.js
+    environment_slug: node-js
+    instance_size_slug: basic-xxs
+    instance_count: 1
+    http_port: 3000
+    source_dir: ./
