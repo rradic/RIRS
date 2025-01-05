@@ -122,8 +122,51 @@ jobs:
           docker push ${{ secrets.DOCKER_HUB_USERNAME }}/frontend:dev
           docker push ${{ secrets.DOCKER_HUB_USERNAME }}/frontend:${{ github.sha }} 
 
-  dockerize-and-push-prod:
+  sonarcloud-analysis:
     needs: test
+    runs-on: ubuntu-latest
+    environment:
+      name: Production
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: |
+          cd /front
+          npm ci
+
+      - name: Collect coverage (React-specific)
+        run: |
+          cd /front
+          npm run test:ci -- --coverage
+        env:
+          CI: true
+
+      - name: Upload coverage report
+        run: |
+          cp /front/coverage/lcov.info .
+
+      - name: Run SonarCloud analysis
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          npx sonar-scanner \
+            -Dsonar.projectKey=${{ secrets.PROJECT_KEY }} \
+            -Dsonar.organization=${{ secrets.ORGANIZATION_KEY }} \
+            -Dsonar.sources=./front \
+            -Dsonar.host.url=https://sonarcloud.io \
+            -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
+
+  dockerize-and-push-prod:
+    needs: [test, sonarcloud-analysis]
     runs-on: ubuntu-latest
     environment: Production
     if: github.ref == 'refs/heads/production' &&  github.event_name == 'workflow_dispatch'
@@ -149,7 +192,7 @@ jobs:
           docker push ${{ secrets.DOCKER_HUB_USERNAME }}/frontend:${{ github.sha }}
 
   deploy-to-firebase:
-    needs: test
+    needs: [test, sonarcloud-analysis]
     runs-on: ubuntu-latest
     environment: Production
     if: github.ref == 'refs/heads/production' ||  github.ref == 'refs/heads/main'
@@ -173,3 +216,18 @@ jobs:
         run: |
           cd front/
           firebase deploy --only hosting --token ${{ secrets.FIREBASE_TOKEN }}
+
+  deploy-pages:
+    needs: test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs
