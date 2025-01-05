@@ -140,19 +140,19 @@ jobs:
 
       - name: Install dependencies
         run: |
-          cd /front
+          cd front
           npm ci
 
       - name: Collect coverage (React-specific)
         run: |
-          cd /front
+          cd front
           npm run test:ci -- --coverage
         env:
           CI: true
 
       - name: Upload coverage report
         run: |
-          cp /front/coverage/lcov.info .
+          cp front/coverage/lcov.info .
 
       - name: Run SonarCloud analysis
         env:
