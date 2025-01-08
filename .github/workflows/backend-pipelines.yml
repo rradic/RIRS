@@ -20,6 +20,8 @@ jobs:
     #        node-version: [20.13.1]
     #        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
+    env:
+      DATABASE_URL: ${{ vars.DATABASE_URL }}
     steps:
       - name: checkout
         uses: actions/checkout@v3
@@ -39,6 +41,8 @@ jobs:
       - name: Install dependencies
         run: |
           cd backend/
+          echo "DATABASE_URL=$DATABASE_URL" >> .env
+        
           npm ci
 
       - name: Upload build artifacts
@@ -87,7 +91,7 @@ jobs:
   dockerize-and-push-dev:
     needs: test
     runs-on: ubuntu-latest
-    environment: Development
+    environment: development
     if: github.ref == 'refs/heads/main'
 
     steps:
@@ -114,7 +118,7 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     environment:
-      name: Production
+      name: production
     if: github.ref == 'refs/heads/main'
 
     steps:
@@ -128,19 +132,19 @@ jobs:
 
       - name: Install dependencies
         run: |
-          cd /front
+          cd backend
           npm ci
 
       - name: Collect coverage (React-specific)
         run: |
-          cd /front
+          cd backend
           npm run test:ci -- --coverage
         env:
           CI: true
 
       - name: Upload coverage report
         run: |
-          cp /front/coverage/lcov.info .
+          cp backend/coverage/lcov.info .
 
       - name: Run SonarCloud analysis
         env:
@@ -156,7 +160,7 @@ jobs:
   dockerize-and-push-prod:
     needs: [test, sonarcloud-analysis]
     runs-on: ubuntu-latest
-    environment: Production
+    environment: production
     if: github.ref == 'refs/heads/production' &&  github.event_name == 'workflow_dispatch'
 
     steps:
@@ -174,7 +178,7 @@ jobs:
           docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/backend:prod backend/
           docker tag ${{ secrets.DOCKER_HUB_USERNAME }}/backend:prod ${{ secrets.DOCKER_HUB_USERNAME }}/backend:${{ github.sha }}
 
-      - name: Push Docker image to Docker Hub
+      - name: Push Docker image to Docker Hub4
         run: |
           docker push ${{ secrets.DOCKER_HUB_USERNAME }}/backend:prod
           docker push ${{ secrets.DOCKER_HUB_USERNAME }}/backend:${{ github.sha }}
@@ -182,7 +186,7 @@ jobs:
   deploy:
     needs: [test, sonarcloud-analysis]
     runs-on: ubuntu-latest
-    environment: Production
+    environment: production
     if: (github.ref == 'refs/heads/production' || github.ref == 'refs/heads/main' )
 
     steps:

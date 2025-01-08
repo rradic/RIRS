@@ -3,7 +3,7 @@ const { dbUrl } = require('./config');
 const User = require('./schemas/user');
 const Expense = require('./schemas/expense');
 const Group = require('./schemas/group');
-
+const bcrypt = require("bcryptjs");
 // SAMO TEST DALI SE POLNE MONGODB!!!
 
 
@@ -13,10 +13,13 @@ mongoose.connect(dbUrl, { useNewUrlParser: true, useUnifiedTopology: true })
 
     async function seedDatabase() {
         try {
-            const user1 = await User.create({ 
+
+            const saltRounds = 10;
+
+                const user1 = await User.create({
                 name: 'John Doe', 
                 email: 'john@example.com', 
-                password: 'securepassword', 
+                password: await bcrypt.hash('securepassword', saltRounds),
                 role: 'employee',
                 budget: 5000
             });
@@ -24,7 +27,7 @@ mongoose.connect(dbUrl, { useNewUrlParser: true, useUnifiedTopology: true })
             const user2 = await User.create({ 
                 name: 'Jane Smith', 
                 email: 'jane@example.com', 
-                password: 'securepassword', 
+                password: await bcrypt.hash('securepassword', saltRounds),
                 role: 'manager',
                 budget: 5000
             });
