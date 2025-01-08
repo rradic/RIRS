@@ -20,6 +20,8 @@ jobs:
     #        node-version: [20.13.1]
     #        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
+    env:
+      DATABASE_URL: ${{ vars.DATABASE_URL }}
     steps:
       - name: checkout
         uses: actions/checkout@v3
@@ -39,6 +41,8 @@ jobs:
       - name: Install dependencies
         run: |
           cd backend/
+          echo "DATABASE_URL=$DATABASE_URL" >> .env
+        
           npm ci
 
       - name: Upload build artifacts
@@ -87,7 +91,7 @@ jobs:
   dockerize-and-push-dev:
     needs: test
     runs-on: ubuntu-latest
-    environment: Development
+    environment: development
     if: github.ref == 'refs/heads/main'
 
     steps:
@@ -110,10 +114,53 @@ jobs:
           docker push ${{ secrets.DOCKER_HUB_USERNAME }}/backend:dev
           docker push ${{ secrets.DOCKER_HUB_USERNAME }}/backend:${{ github.sha }}
 
-  dockerize-and-push-prod:
+  sonarcloud-analysis:
     needs: test
     runs-on: ubuntu-latest
-    environment: Production
+    environment:
+      name: production
+    if: github.ref == 'refs/heads/production'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: |
+          cd backend
+          npm ci
+
+      - name: Collect coverage (React-specific)
+        run: |
+          cd backend
+          npm run test:ci -- --coverage
+        env:
+          CI: true
+
+      - name: Upload coverage report
+        run: |
+          cp backend/coverage/lcov.info .
+
+      - name: Run SonarCloud analysis
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          npx sonar-scanner \
+            -Dsonar.projectKey=${{ secrets.PROJECT_KEY }} \
+            -Dsonar.organization=${{ secrets.ORGANIZATION_KEY }} \
+            -Dsonar.sources=./front \
+            -Dsonar.host.url=https://sonarcloud.io \
+            -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
+
+  dockerize-and-push-prod:
+    needs: [test, sonarcloud-analysis]
+    runs-on: ubuntu-latest
+    environment: production
     if: github.ref == 'refs/heads/production' &&  github.event_name == 'workflow_dispatch'
 
     steps:
@@ -131,32 +178,7 @@ jobs:
           docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/backend:prod backend/
           docker tag ${{ secrets.DOCKER_HUB_USERNAME }}/backend:prod ${{ secrets.DOCKER_HUB_USERNAME }}/backend:${{ github.sha }}
 
-      - name: Push Docker image to Docker Hub
+      - name: Push Docker image to Docker Hub4
         run: |
           docker push ${{ secrets.DOCKER_HUB_USERNAME }}/backend:prod
           docker push ${{ secrets.DOCKER_HUB_USERNAME }}/backend:${{ github.sha }}
-
-  deploy:
-    needs: test
-    runs-on: ubuntu-latest
-    environment: Production
-    if: (github.ref == 'refs/heads/production' || github.ref == 'refs/heads/main' )
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Install DigitalOcean CLI
-        run: |
-          curl -sL https://github.com/digitalocean/doctl/releases/latest/download/doctl-$(uname -s)-$(uname -m).tar.gz | tar -xzv
-          sudo mv doctl /usr/local/bin
-
-      - name: Authenticate with DigitalOcean
-        env:
-          DO_API_TOKEN: ${{ secrets.DO_API_TOKEN }}
-        run: doctl auth init --access-token $DO_API_TOKEN
-
-      - name: Deploy to DigitalOcean
-        env:
-          DO_API_TOKEN: ${{ secrets.DO_API_TOKEN }}
-        run: doctl app create --spec .do/app.yaml || doctl app update --spec .do/app.yaml

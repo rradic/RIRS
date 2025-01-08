@@ -99,7 +99,7 @@ jobs:
   dockerize-and-push-dev:
     needs: test
     runs-on: ubuntu-latest
-    environment: Development
+    environment: development
     if: github.ref == 'refs/heads/main'
 
     steps:
@@ -140,19 +140,19 @@ jobs:
 
       - name: Install dependencies
         run: |
-          cd /front
+          cd front
           npm ci
 
       - name: Collect coverage (React-specific)
         run: |
-          cd /front
+          cd front
           npm run test:ci -- --coverage
         env:
           CI: true
 
       - name: Upload coverage report
         run: |
-          cp /front/coverage/lcov.info .
+          cp front/coverage/lcov.info .
 
       - name: Run SonarCloud analysis
         env:
@@ -168,7 +168,7 @@ jobs:
   dockerize-and-push-prod:
     needs: [test, sonarcloud-analysis]
     runs-on: ubuntu-latest
-    environment: Production
+    environment: production
     if: github.ref == 'refs/heads/production' &&  github.event_name == 'workflow_dispatch'
 
     steps:
@@ -194,7 +194,7 @@ jobs:
   deploy-to-firebase:
     needs: [test, sonarcloud-analysis]
     runs-on: ubuntu-latest
-    environment: Production
+    environment: production
     if: github.ref == 'refs/heads/production' ||  github.ref == 'refs/heads/main'
 
     steps:
