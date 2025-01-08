@@ -194,8 +194,8 @@ jobs:
 
       - name: Push Docker image to Docker Hub
         run: |
-          docker push ${{ secrets.DOCKER_HUB_USERNAME }}/frontend:prod
-          docker push ${{ secrets.DOCKER_HUB_USERNAME }}/frontend:${{ github.sha }}
+          docker push ${{ secrets.DH_USERNAME }}/frontend:prod
+          docker push ${{ secrets.DH_USERNAME }}/frontend:${{ github.sha }}
 
   deploy-to-firebase:
     needs: [test, sonarcloud-analysis]
