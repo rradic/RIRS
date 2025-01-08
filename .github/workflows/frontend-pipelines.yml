@@ -127,7 +127,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: production
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/production'
 
     steps:
       - name: Checkout code
@@ -197,7 +197,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: production
-    if: github.ref == 'refs/heads/production' ||  github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/production'
 
     steps:
       - name: Checkout code
