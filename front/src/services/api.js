@@ -2,7 +2,7 @@ import axios from "axios";
 const token = localStorage.getItem("token");
 
 const api = axios.create({
-  baseURL: process.env.REACT_APP_API_URL + "/api",
+  baseURL: "/api",
   headers: {
     "Content-Type": "application/json"
   },
@@ -26,7 +26,7 @@ api.interceptors.request.use(
 );
 
 const apiCsv = axios.create({
-  baseURL: process.env.REACT_APP_API_URL + '/api',
+  baseURL: '/api',
   headers: {
     'Accept': 'text/octet-stream',
     'Content-Type': 'text/octet-stream',
