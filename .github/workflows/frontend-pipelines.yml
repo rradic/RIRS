@@ -126,7 +126,7 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     environment:
-      name: Production
+      name: production
     if: github.ref == 'refs/heads/main'
 
     steps:
@@ -168,7 +168,8 @@ jobs:
   dockerize-and-push-prod:
     needs: [test, sonarcloud-analysis]
     runs-on: ubuntu-latest
-    environment: production
+    environment:
+      name: production
     if: github.ref == 'refs/heads/production' &&  github.event_name == 'workflow_dispatch'
 
     steps:
@@ -194,7 +195,8 @@ jobs:
   deploy-to-firebase:
     needs: [test, sonarcloud-analysis]
     runs-on: ubuntu-latest
-    environment: production
+    environment:
+      name: production
     if: github.ref == 'refs/heads/production' ||  github.ref == 'refs/heads/main'
 
     steps:
