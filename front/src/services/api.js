@@ -2,7 +2,7 @@ import axios from "axios";
 const token = localStorage.getItem("token");
 
 const api = axios.create({
-  baseURL: "/api",
+  baseURL: "https://octopus-app-tzifw.ondigitalocean.app/api",
   headers: {
     "Content-Type": "application/json"
   },
@@ -26,7 +26,7 @@ api.interceptors.request.use(
 );
 
 const apiCsv = axios.create({
-  baseURL: '/api',
+  baseURL: 'https://octopus-app-tzifw.ondigitalocean.app/api',
   headers: {
     'Accept': 'text/octet-stream',
     'Content-Type': 'text/octet-stream',
